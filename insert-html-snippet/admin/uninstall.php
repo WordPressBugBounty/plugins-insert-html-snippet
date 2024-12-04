@@ -30,6 +30,8 @@ delete_option("xyz_ihs_sort_field_name");
 delete_option("xyz_ihs_limit");
 delete_option("xyz_ihs_installed_date");
 delete_option('xyz_ihs_credit_dismiss');
+delete_option('xyz_ihs_premium_version_ads');
+delete_option('xyz_ihs_exec_in_editor');
 /* table delete*/
 $wpdb->query("DROP TABLE ".$wpdb->prefix."xyz_ihs_short_code");
 

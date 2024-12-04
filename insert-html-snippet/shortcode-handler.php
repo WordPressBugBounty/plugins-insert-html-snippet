@@ -8,9 +8,26 @@ add_shortcode('xyz-ihs','xyz_ihs_display_content');
 
 function xyz_ihs_display_content($xyz_snippet_name){
 	global $wpdb;
-	if (is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ))
-	{
-				return ''; // Do not execute the shortcode in the admin area
+	$xyz_ihs_exec_in_editor = get_option('xyz_ihs_exec_in_editor');
+    if ( $xyz_ihs_exec_in_editor ) {
+        // Page Builder checks (Elementor, WPBakery, Divi, Beaver Builder)
+        if ( wp_doing_ajax() ) {
+            $builder_actions = ['elementor_preview', 'wpb_pb_preview', 'et_pb_preview'];
+            // Check for Elementor, WPBakery, Divi actions
+            if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], $builder_actions, true ) ) {
+                // Allow shortcode execution in page builder previews
+            }
+        // Beaver Builder detection using URL parameters
+        if ( isset( $_REQUEST['fl_builder'] ) && isset( $_REQUEST['fl_builder'] ) ) {
+            // Allow execution for Beaver Builder preview
+            }
+        }
+        // Classic Editor or Gutenberg Editor check (editing posts)
+        if ( is_admin() && isset( $_GET['post'] ) && 'edit' === $_GET['action'] ) {
+            // Allow shortcode execution in Classic Editor or Gutenberg (when editing posts)
+        }
+    } elseif ( is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+        return ''; // Do not execute shortcode in other admin areas or REST API requests
 	}
 	if(is_array($xyz_snippet_name)&& isset($xyz_snippet_name['snippet'])){
 	   

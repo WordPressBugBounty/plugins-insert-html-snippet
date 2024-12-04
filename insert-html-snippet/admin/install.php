@@ -60,6 +60,7 @@ wp_die( "The plugin Insert HTML Snippet cannot be activated unless the premium v
 	}
 
 	add_option('xyz_ihs_limit',20);
+	add_option('xyz_ihs_exec_in_editor','0');
 	
 	
 	$charset_collate = $wpdb->get_charset_collate();

@@ -36,6 +36,7 @@ Thanks again for using the plugin. We will never show the message again.
 			$_POST = stripslashes_deep($_POST);
 			$xyz_ihs_limit = abs(intval($_POST['xyz_ihs_limit']));
 			$xyz_ihs_pre_ads = intval($_POST['xyz_ihs_pre_ads']);
+			$xyz_ihs_exec_in_editor = intval($_POST['xyz_ihs_exec_in_editor']);
 			if($xyz_ihs_limit==0)$xyz_ihs_limit=20;
 			$xyz_ihs_credit = sanitize_text_field($_POST['xyz_ihs_credit']);
 			if($xyz_ihs_credit=="ihs" || $xyz_ihs_credit==0)
@@ -57,6 +58,7 @@ Thanks again for using the plugin. We will never show the message again.
 
 
 			update_option('xyz_ihs_limit',$xyz_ihs_limit);
+			update_option('xyz_ihs_exec_in_editor',$xyz_ihs_exec_in_editor);
 
 ?>
 <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
@@ -124,6 +126,17 @@ Thanks again for using the plugin. We will never show the message again.
 								<option value="0">Disable</option>
 								<option value="1" <?php selected(get_option('xyz_ihs_premium_version_ads'),1);?>>Enable</option>
 							</select>
+						</td>
+					</tr>
+					<tr valign="top">
+						<td scope="row">
+							<label for="xyz_ihs_exec_in_editor">Execute shortcodes in editors</label><br/><span style="color: #1A87B9;font-size:13px;" >[Enable/Disable Shortcode Execution in Editors (Gutenberg, Classic, Elementor, etc.)]</span>
+						</td>
+						<td>
+						<select name="xyz_ihs_exec_in_editor" id="xyz_ihs_exec_in_editor">
+                                <option value="0" <?php selected(get_option('xyz_ihs_exec_in_editor'),0);?>>Disable</option>
+                                <option value="1" <?php selected(get_option('xyz_ihs_exec_in_editor'),1);?>>Enable</option>
+                            </select>
 						</td>
 					</tr>
 					<tr valign="top">
