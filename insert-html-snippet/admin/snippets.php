@@ -79,7 +79,10 @@ if ( ! defined( 'ABSPATH' ) )
     if($xyz_ihs_message == 1){
         ?>
 <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
-HTML Snippet successfully added.&nbsp;&nbsp;&nbsp;<span
+<span id="system_notice_area_common_msg">
+HTML Snippet successfully added.&nbsp;&nbsp;&nbsp;
+</span>
+<span
 id="xyz_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
@@ -89,7 +92,9 @@ if($xyz_ihs_message == 2){
 
 	?>
 <div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
-HTML Snippet not found.&nbsp;&nbsp;&nbsp;<span
+<span id="system_notice_area_common_msg">HTML Snippet not found.&nbsp;&nbsp;&nbsp;
+</span>
+<span
 id="xyz_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
@@ -99,7 +104,10 @@ if($xyz_ihs_message == 3){
 
 	?>
 <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
-HTML Snippet successfully deleted.&nbsp;&nbsp;&nbsp;<span
+<span id="system_notice_area_common_msg">
+HTML Snippet successfully deleted.&nbsp;&nbsp;&nbsp;
+</span>
+<span
 id="xyz_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
@@ -109,7 +117,10 @@ if($xyz_ihs_message == 4){
 
 	?>
 <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
-HTML Snippet status successfully changed.&nbsp;&nbsp;&nbsp;<span
+<span id="system_notice_area_common_msg">
+HTML Snippet status successfully changed.&nbsp;&nbsp;&nbsp;
+</span>
+<span
 id="xyz_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
@@ -119,7 +130,10 @@ if($xyz_ihs_message == 5){
 
 	?>
 <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
-HTML Snippet successfully updated.&nbsp;&nbsp;&nbsp;<span
+<span id="system_notice_area_common_msg">
+HTML Snippet successfully updated.&nbsp;&nbsp;&nbsp;
+</span>
+<span
 id="xyz_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
@@ -128,7 +142,9 @@ if($xyz_ihs_message == 7)
 {
 ?>
  <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
-		Please select an action to apply.&nbsp;&nbsp;&nbsp;
+			<span id="system_notice_area_common_msg">
+Please select an action to apply.&nbsp;&nbsp;&nbsp;
+</span>
 		<span id="xyz_system_notice_area_dismiss">Dismiss</span>
  </div>
 <?php 
@@ -137,8 +153,10 @@ if($xyz_ihs_message == 8)
 {
 	?>
 	<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
-		Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
-		<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+<span id="system_notice_area_common_msg">		
+Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
+</span		
+<span id="xyz_system_notice_area_dismiss">Dismiss</span>
 	</div>
 <?php
 }
@@ -164,7 +182,22 @@ if($xyz_ihs_message == 8)
 			$search_name_db=esc_sql($search_name);
     		        }
 
-			$entries = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix."xyz_ihs_short_code  	WHERE title like '%".$search_name_db."%'"." ORDER BY  $field $order LIMIT $offset,$limit" );
+	               if(isset($_POST['insertionMethod']))
+			{
+				$insertionMethod =intval($_POST["insertionMethod"]); 
+			}
+			else
+			{
+				$insertionMethod =0;
+			}
+			$strInsertionMethod='';
+			if (intval($insertionMethod)>0)
+			{
+			$strInsertionMethod=" AND insertionMethod=$insertionMethod";
+			}
+		
+
+			$entries = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix."xyz_ihs_short_code  	WHERE title like '%".$search_name_db."%'".$strInsertionMethod." ORDER BY  $field $order LIMIT $offset,$limit" );
 
 			?>
 			
@@ -189,13 +222,22 @@ if($xyz_ihs_message == 8)
 </form>		
 <form name="manage_snippets" action="" method="post">
 							 <?php wp_nonce_field('snipp-manage_');?>
-							<div class="xyz_ics_search_div"  style="float:right;">
-				            	<table class="xyz_ics_search_div_table" style="width:100%;">
+							<div class="xyz_ihs_search_div"  style="float:right;margin:5px;">
+				            	<table class="xyz_ihs_search_div_table" style="width:100%;">
 				                	<tr>
 				            
+				                  	<div><span>Snippet Placement</span>&nbsp;</div>
+   <div>
+   <select name="insertionMethod" id="insertionMethod" >
+  <option value="0" <?php if($insertionMethod==0) { echo "selected"; } ?>>All</option>
+	  <option value="1" <?php if($insertionMethod==1) { echo "selected"; } ?>>Automatic</option>
+	<option value="2" <?php if($insertionMethod==2) { echo "selected"; } ?>>Short Code</option>
+	
+		</select>
+	</div>
 				                  		 	
-				                  		 	 <input type="text" name="snippet_name" value= "<?php if(isset($search_name)){echo esc_attr($search_name);}?>"  placeholder="Search" >
-				                   			<input type="submit" name="search" value="Go" />
+		<div> <input type="text" name="snippet_name" value= "<?php if(isset($search_name)){echo esc_attr($search_name);}?>"  placeholder="Search" ></div>
+	<div><input style="padding:5px;margin-left: 5px;margin-right: 5px;" type="submit" name="search" value="Go" /></div>
 				                 	
 				              		</tr>
 				           		</table>
@@ -208,7 +250,9 @@ if($xyz_ihs_message == 8)
 					<tr>
 					<th scope="col" width="3%"><input type="checkbox" id="chkAllSnippets" /></th>
 						<th scope="col" >Tracking Name</th>
-						<th scope="col" >Snippet Short Code</th>
+			<th scope="col">Snippet Placement 
+
+</th>
 						<th scope="col" >Status</th>
 						<th scope="col" colspan="3" style="text-align: center;">Action</th>
 					</tr>
@@ -231,11 +275,21 @@ if($xyz_ihs_message == 8)
 						<td id="xyz_ihs_vAlign"><?php 
 						echo esc_html($entry->title);
 						?></td>
-						<td id="xyz_ihs_vAlign"><?php 
-						if($entry->status == 2){echo 'NA';}
-						else
-						echo '[xyz-ihs snippet="'.esc_html($entry->title).'"]';
-						?></td>
+<td id="xyz_ihs_vAlign">
+    <?php 
+    if ($entry->status == 2) {
+        echo 'NA';
+    } else { 
+        echo ($entry->insertionMethod == 1) ? 
+            'Automatic' : 
+            (($entry->insertionMethod == 2) ? 
+                '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')" class="xyz_ic_copy_shortcode" id="xyz_ihs_shortcode_' . $entry->id . '">[xyz-ihs snippet="' . esc_html($entry->title) . '"]</span>' .
+                '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')"><img class="xyz_ihs_img xyz_ihs_img_table" title="Click to copy" src="' . plugins_url('insert-html-snippet/images/copy-document.png') . '"></span>' 
+            : 
+            '');
+    }
+    ?>
+</td>
 						<td id="xyz_ihs_vAlign">
 							<?php 
 								if($entry->status == 2){
@@ -326,4 +380,74 @@ jQuery(document).ready(function(){
 		jQuery(".chk").prop("checked",jQuery("#chkAllSnippets").prop("checked"));
     }); 
 });
+const xyz_ihs_copy_shortcode = (id) => {
+
+    var span = document.getElementById("xyz_ihs_shortcode_" + id);
+    var tempTextarea = document.createElement("textarea");
+    tempTextarea.value = span.textContent;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    tempTextarea.setSelectionRange(0, 99999); // For mobile devices
+    document.execCommand("copy");
+    document.body.removeChild(tempTextarea);
+
+
+  (typeof xyz_ihs_notice === 'function')? xyz_ihs_notice('Short code copied successfully',1):null;
+
+};
+
+
+const xyz_ihs_notice = (msg = '', flag = 0) => {
+
+
+const noticeElement = jQuery('#xyz_system_notice_area');
+if (noticeElement.length > 0) 
+{
+
+  jQuery('#system_notice_area_common_msg').text(msg);
+  if (flag === 0) {
+  if(noticeElement.hasClass('system_notice_area_style1'))
+  noticeElement.removeClass('system_notice_area_style1')
+  if(! noticeElement.hasClass('system_notice_area_style0'))
+  noticeElement.addClass('system_notice_area_style0');
+
+  } else {
+  if(noticeElement.hasClass('system_notice_area_style0'))
+  noticeElement.removeClass('system_notice_area_style0')
+  if(! noticeElement.hasClass('system_notice_area_style1'))
+  noticeElement.addClass('system_notice_area_style1');
+
+  }
+  noticeElement.animate({
+    opacity: 'show',
+    height: 'show'
+  }, 500);
+
+}
+else{
+
+
+
+  let noticeElementString = 
+  `<div class="system_notice_area_style${flag}" id="xyz_system_notice_area">
+    <span id="system_notice_area_common_msg">${msg}.&nbsp;&nbsp;&nbsp;</span>
+    <span id="xyz_system_notice_area_dismiss">Dismiss</span>
+  </div>`;
+
+  let noticeElement = jQuery(noticeElementString);
+  jQuery('body').append(noticeElement);
+  noticeElement.animate({
+    opacity: 'show',
+    height: 'show'
+  }, 500); 
+
+
+
+
+
+}
+
+};
+
+
 </script>

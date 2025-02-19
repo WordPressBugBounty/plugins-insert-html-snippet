@@ -4,7 +4,87 @@ if ( ! defined( 'ABSPATH' ) )
 	
 global $wpdb;
 
+include_once  'admin/constants.php';
 add_shortcode('xyz-ihs','xyz_ihs_display_content');		
+$table_name = $wpdb->prefix . 'xyz_ihs_short_code';
+$snippets = $wpdb->get_results("SELECT * FROM $table_name WHERE insertionMethod = 1 AND status = 1");
+
+
+foreach ($snippets as $snippet) {
+	
+	switch ($snippet->insertionLocation) {
+		
+
+		case XYZ_IHS_INSERTION_LOCATION['ADMIN_RUN_ON_HEADER']:
+			if (is_admin()) {
+				add_action('admin_head', function() use ($snippet) {
+					echo xyz_execute_ihs_snippet($snippet);
+				}, 10);
+			}
+			
+			break;	
+			case XYZ_IHS_INSERTION_LOCATION['ADMIN_RUN_ON_FOOTER']:
+				if (is_admin()) {
+
+					
+				add_action('admin_footer', function() use ($snippet) {
+					echo xyz_execute_ihs_snippet($snippet);
+				}, 10);
+			}
+			
+			break;	
+
+			
+		
+			case XYZ_IHS_INSERTION_LOCATION['FRONTEND_RUN_ON_HEADER']:
+				if (!is_admin()) {
+				add_action('wp_head', function() use ($snippet) {
+				echo xyz_execute_ihs_snippet($snippet);
+				}, 10);
+			}
+			
+			break;	
+		
+			case XYZ_IHS_INSERTION_LOCATION['FRONTEND_RUN_ON_FOOTER']:
+				if (!is_admin()) {
+			
+					
+				add_action('wp_footer', function() use ($snippet) {
+
+					echo xyz_execute_ihs_snippet($snippet);
+					
+				}, 10);
+			}
+			
+			break;	
+		
+			  
+			
+				
+				
+
+	}
+}
+
+function xyz_execute_ihs_snippet($sippetdetails)
+{
+
+if($sippetdetails->status==1){
+	$xyz_ihs_content=$sippetdetails->content;
+    if (!empty($xyz_ihs_content)) {
+        return $xyz_ihs_content;
+    } else {
+        return ''; 
+    }
+		
+	  }
+	  else{
+		  return '';
+	  }
+
+
+}
+/* customization ends */
 
 function xyz_ihs_display_content($xyz_snippet_name){
 	global $wpdb;

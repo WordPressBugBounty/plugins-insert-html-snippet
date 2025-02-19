@@ -12,7 +12,7 @@ header( 'Content-Type: text/javascript' );
 global $wpdb;
 $buttonName = 'xyz_ihs_snippet_selector';
 
-$xyz_snippets_arr=$wpdb->get_results($wpdb->prepare( "SELECT id,title FROM ".$wpdb->prefix."xyz_ihs_short_code WHERE status=%d  ORDER BY id DESC",1),ARRAY_A );
+$xyz_snippets_arr=$wpdb->get_results($wpdb->prepare( "SELECT id,title FROM ".$wpdb->prefix."xyz_ihs_short_code WHERE status=%d and insertionMethod=%d ORDER BY id DESC",1,2),ARRAY_A );
 // 		print_r($xyz_snippets_arr);
 if(empty($xyz_snippets_arr))//if(count($xyz_snippets_arr)==0)
 die;

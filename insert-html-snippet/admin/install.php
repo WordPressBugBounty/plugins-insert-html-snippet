@@ -73,6 +73,13 @@ wp_die( "The plugin Insert HTML Snippet cannot be activated unless the premium v
 		  PRIMARY KEY (`id`)
 		)ENGINE=InnoDB ".$charset_collate." AUTO_INCREMENT=1";
 	$wpdb->query($queryInsertHtml);
+	$tblcolums = $wpdb->get_col("SHOW COLUMNS FROM  ".$wpdb->prefix."xyz_ihs_short_code");
+    if(!(in_array("insertionMethod", $tblcolums)))
+	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD insertionMethod int NOT NULL default 2");
+    if(!(in_array("insertionLocation", $tblcolums)))
+	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD insertionLocation int NOT NULL default 0");
+	if(!(in_array("insertionLocationType", $tblcolums)))
+	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD insertionLocationType int NOT NULL default 0");
 }
 
 register_activation_hook( XYZ_INSERT_HTML_PLUGIN_FILE ,'xyz_ihs_network_install');

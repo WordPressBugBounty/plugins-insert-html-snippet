@@ -3,50 +3,51 @@ if ( ! defined( 'ABSPATH' ) )
     exit;
 if(get_option('xyz_ihs_premium_version_ads')==1){?>
 <div id="xyz-ihs-premium">
-    <div style="float: left; padding: 0 5px">
-        <h2 style="vertical-align: middle;">
+      <div class="ContentCenter">
             <a target="_blank"
-                href="https://xyzscripts.com/wordpress-plugins/xyz-wp-insert-code-snippet/details
-">Fully Featured XYZ WP Insert Code Snippet Premium Plugin</a> - Just 19 USD
-        </h2>
+            href="https://xyzscripts.com/wordpress-plugins/xyz-wp-insert-code-snippet/details">🚀 Upgrade to the Fully Featured XYZ WP Insert Code Snippet Premium Plugin for </a>
+             <span style="font-size: 28px; color:#fbff00;"> Just 19 USD</span>
+      <br/><span style="font-size: 14px;color:#fff;">Access exclusive features like advanced targeting, automatic snippet placements across your site, syntax highlighting for better code management, and easy snippet export/import!</span>
     </div>
-    <div style="float: left; margin-top: 3px">
-        <a target="_blank" href="https://xyzscripts.com/members/product/purchase/XYZWPICSPRE"><img
-            src="<?php  echo plugins_url("images/orange_buynow.png",XYZ_INSERT_HTML_PLUGIN_FILE); ?>">
+				<div class="clear"></div>
+	<div class="ButtonWrap">
+    <div class="BuyNowButton">
+        <a target="_blank"
+            href="https://xyzscripts.com/members/product/purchase/XYZWPICSPRE">🛒 Buy Now
         </a>
     </div>
-    <div style="float: left; padding: 0 5px">
-        <h2 style="vertical-align: middle;text-shadow: 1px 1px 1px #686868">
-            (
+    <div class="CompareButton">
+    <h2>
             <a href="<?php echo admin_url('admin.php?page=insert-html-snippet-about');?>">Compare Features</a>
-            )
         </h2>
     </div>
+		</div>
 </div>
-<?php }
+<?php
+    }
 ?>
 <div style="clear: both;">
 </div>
-<div style="width: 100%">
+<div class="xyz-ihs-wrap">
     <div class="xyz_ihs_social_media">
         <h3 class="xyz_ihs_inner_head">
-            Follow Us 
+            Follow Us
         </h3>
         <a target="_blank" href="http://facebook.com/xyzscripts" class="xyz_home_fbook"></a>
         <a target="_blank" href="http://twitter.com/xyzscripts" class="xyz_home_twitt"></a>
-        <a target="_blank" href="https://plus.google.com/+Xyzscripts/" class="xyz_home_gplus"></a>
+        <a target="_blank" href="https://www.instagram.com/xyz_scripts/" class="xyz_home_insta"></a>
         <a style="margin-right:0px;" target="_blank" href="https://www.linkedin.com/company/xyzscripts" class="xyz_home_linkedin"></a>
     </div>
     <div class="xyz_ihs_sugession">
         <h3 class="xyz_ihs_inner_head"> Support</h3>
-	  <p  style="width:100%;"><a target="_blank" href="https://xyzscripts.com/donate/5" >Donate</a></p>
+	  
       <p  style="width:100%;"><a target="_blank" href="https://xyzscripts.com/support/" >Contact Us</a></p>
       <p  ><a target="_blank" href="https://wordpress.org/support/plugin/insert-html-snippet/reviews/" >Please Rate Us
        </a></p>
        <a target="_blank" href="https://wordpress.org/support/plugin/insert-html-snippet/reviews/" ><span class="xyz_new_star"></span></a>
        <p  style="width:100%;"><a target="_blank" href="https://wordpress.org/support/plugin/insert-html-snippet/" >Create a ticket at Wordpress forum</a>
-       </p>    
-    </div> 
+       </p>
+    </div>
     <div class="xyz_ihs_new_subscribe">
         <h3 class="xyz_ihs_inner_head">
             Stay tuned for our updates
@@ -127,17 +128,13 @@ else if (strcasecmp($current_user->user_login ,"admin")!=0 && strcasecmp($curren
             <input type="hidden" name="listName" value="6,1,"/>
      </form>
     </div>
-<div class="xyz_ihs_inmotion" >
-   <a target="_blank" href="http://inmotion-hosting.evyy.net/c/1150074/260033/4222">
-   <img src="<?php echo plugins_url()?>/insert-html-snippet/images/xyz.png" class="xyz_ihs_inmotion_label"></a>
-   </div>
 </div>
 <div style="clear: both;">
 </div>
 <div style="width: 100%">
     <div class="xyz_our_plugins_new">
         <p class="xyz_plugin_head">
-            Our Plugins : 
+            Our Plugins :
         </p>
         <a target="_blank"  href="https://wordpress.org/plugins/social-media-auto-publish/"><span>1</span>Social Media Auto Publish</a>
         <a target="_blank"  href="https://wordpress.org/plugins/facebook-auto-publish/"><span>2</span>Facebook Auto Publish</a>
@@ -158,7 +155,7 @@ else if (strcasecmp($current_user->user_login ,"admin")!=0 && strcasecmp($curren
     </div>
 </div>
 <div class="xyz_poweredBy">
-    Powered by 
+    Powered by
     <a href="http://xyzscripts.com" target="_blank">XYZScripts</a>
 </div>
 <div style="clear: both;"></div>
