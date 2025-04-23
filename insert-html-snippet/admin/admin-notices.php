@@ -41,18 +41,18 @@ $xyz_ihs_notice = wp_nonce_url($xyz_ihs_notice,'ihs-shw');
 	<div id="xyz_ihs_notice_td" class="error" style="color: #666666;margin-left: 2px; padding: 5px;line-height:16px;">
 	<p>Thank you for using  <a href="https://wordpress.org/plugins/insert-html-snippet/" target="_blank">Insert HTML Snippet</a> plugin from <a href="https://xyzscripts.com/" target="_blank">xyzscripts.com</a>. Would you consider supporting us with the continued development of the plugin using any of the below methods?</p>
 	<p>
-	<a href="https://wordpress.org/support/plugin/insert-html-snippet/reviews/" class="button xyz_rate_btn" target="_blank">Rate it 5★\'s on wordpress</a>';
+	<a href="https://wordpress.org/support/plugin/insert-html-snippet/reviews/" class="button xyz_ihs_rate_btn" target="_blank">Rate it 5★\'s on wordpress</a>';
 	
 	if(get_option('xyz_credit_link')=="0")
-		echo '<a href="'.$xyz_ihs_link.'" class="button xyz_backlink_btn xyz_blink">Enable Backlink</a>';
+		echo '<a href="'.$xyz_ihs_link.'" class="button xyz_ihs_backlink_btn xyz_blink">Enable Backlink</a>';
 	
-	echo '<a class="button xyz_share_btn" onclick=xyz_ihs_share_snippet();>Share on</a>
+	echo '<a class="button xyz_ihs_share_btn" onclick=xyz_ihs_share_snippet();>Share on</a>
 	
-		<a href="https://xyzscripts.com/donate/5" class="button xyz_donate_btn" target="_blank">Donate</a>
+		<a href="https://xyzscripts.com/donate/5" class="button xyz_ihs_donate_btn" target="_blank">Donate</a>
 		
 		
 		
-	<a href="'.$xyz_ihs_notice.'" class="button xyz_show_btn">Don\'t Show This Again</a>
+	<a href="'.$xyz_ihs_notice.'" class="button xyz_ihs_show_btn">Don\'t Show This Again</a>
 	</p>
 	
 	<div id="show_share_icons_ihs" style="display: none;">

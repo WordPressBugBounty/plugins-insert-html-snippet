@@ -19,9 +19,9 @@ if(!$_POST && isset($_GET['ihs_notice'])&& $_GET['ihs_notice'] == 'hide')
 display:none !important;
 }
 </style>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 Thanks again for using the plugin. We will never show the message again.
- &nbsp;&nbsp;&nbsp;<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+ &nbsp;&nbsp;&nbsp;<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 }
@@ -61,9 +61,9 @@ Thanks again for using the plugin. We will never show the message again.
 			update_option('xyz_ihs_exec_in_editor',$xyz_ihs_exec_in_editor);
 
 ?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 	Settings updated successfully. &nbsp;&nbsp;&nbsp;
-	<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+	<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 		}
@@ -143,7 +143,7 @@ Thanks again for using the plugin. We will never show the message again.
 						<td scope="row" class=" xyz_ihs_settingInput" id="xyz_ihs_bottomBorderNone">
 						</td>
 						<td id="xyz_ihs_bottomBorderNone">
-							<input style="margin:10px 0 20px 0;" id="submit" class="button-primary xyz_bottonWidth" type="submit" value=" Update Settings " />
+							<input style="margin:10px 0 20px 0;" id="submit" class="button-primary xyz_ihs_bottonWidth" type="submit" value=" Update Settings " />
 						</td>
 					</tr>
 				</table>

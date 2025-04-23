@@ -78,12 +78,12 @@ if ( ! defined( 'ABSPATH' ) )
     }
     if($xyz_ihs_message == 1){
         ?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 <span id="system_notice_area_common_msg">
 HTML Snippet successfully added.&nbsp;&nbsp;&nbsp;
 </span>
 <span
-id="xyz_system_notice_area_dismiss">Dismiss</span>
+id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 
@@ -91,11 +91,11 @@ id="xyz_system_notice_area_dismiss">Dismiss</span>
 if($xyz_ihs_message == 2){
 
 	?>
-<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
 <span id="system_notice_area_common_msg">HTML Snippet not found.&nbsp;&nbsp;&nbsp;
 </span>
 <span
-id="xyz_system_notice_area_dismiss">Dismiss</span>
+id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 
@@ -103,12 +103,12 @@ id="xyz_system_notice_area_dismiss">Dismiss</span>
 if($xyz_ihs_message == 3){
 
 	?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 <span id="system_notice_area_common_msg">
 HTML Snippet successfully deleted.&nbsp;&nbsp;&nbsp;
 </span>
 <span
-id="xyz_system_notice_area_dismiss">Dismiss</span>
+id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 
@@ -116,12 +116,12 @@ id="xyz_system_notice_area_dismiss">Dismiss</span>
 if($xyz_ihs_message == 4){
 
 	?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 <span id="system_notice_area_common_msg">
 HTML Snippet status successfully changed.&nbsp;&nbsp;&nbsp;
 </span>
 <span
-id="xyz_system_notice_area_dismiss">Dismiss</span>
+id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 
@@ -129,34 +129,34 @@ id="xyz_system_notice_area_dismiss">Dismiss</span>
 if($xyz_ihs_message == 5){
 
 	?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 <span id="system_notice_area_common_msg">
 HTML Snippet successfully updated.&nbsp;&nbsp;&nbsp;
 </span>
 <span
-id="xyz_system_notice_area_dismiss">Dismiss</span>
+id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 }
 if($xyz_ihs_message == 7)
 {
 ?>
- <div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+ <div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 			<span id="system_notice_area_common_msg">
 Please select an action to apply.&nbsp;&nbsp;&nbsp;
 </span>
-		<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+		<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
  </div>
 <?php 
 }
 if($xyz_ihs_message == 8)
 {
 	?>
-	<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+	<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 <span id="system_notice_area_common_msg">		
 Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 </span		
-<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 	</div>
 <?php
 }
@@ -283,7 +283,7 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
         echo ($entry->insertionMethod == 1) ? 
             'Automatic' : 
             (($entry->insertionMethod == 2) ? 
-                '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')" class="xyz_ic_copy_shortcode" id="xyz_ihs_shortcode_' . $entry->id . '">[xyz-ihs snippet="' . esc_html($entry->title) . '"]</span>' .
+                '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')" class="xyz_ihs_copy_shortcode" id="xyz_ihs_shortcode_' . $entry->id . '">[xyz-ihs snippet="' . esc_html($entry->title) . '"]</span>' .
                 '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')"><img class="xyz_ihs_img xyz_ihs_img_table" title="Click to copy" src="' . plugins_url('insert-html-snippet/images/copy-document.png') . '"></span>' 
             : 
             '');
@@ -400,22 +400,22 @@ const xyz_ihs_copy_shortcode = (id) => {
 const xyz_ihs_notice = (msg = '', flag = 0) => {
 
 
-const noticeElement = jQuery('#xyz_system_notice_area');
+const noticeElement = jQuery('#xyz_ihs_system_notice_area');
 if (noticeElement.length > 0) 
 {
 
   jQuery('#system_notice_area_common_msg').text(msg);
   if (flag === 0) {
-  if(noticeElement.hasClass('system_notice_area_style1'))
-  noticeElement.removeClass('system_notice_area_style1')
-  if(! noticeElement.hasClass('system_notice_area_style0'))
-  noticeElement.addClass('system_notice_area_style0');
+  if(noticeElement.hasClass('xyz_ihs_system_notice_area_style1'))
+  noticeElement.removeClass('xyz_ihs_system_notice_area_style1')
+  if(! noticeElement.hasClass('xyz_ihs_system_notice_area_style0'))
+  noticeElement.addClass('xyz_ihs_system_notice_area_style0');
 
   } else {
-  if(noticeElement.hasClass('system_notice_area_style0'))
-  noticeElement.removeClass('system_notice_area_style0')
-  if(! noticeElement.hasClass('system_notice_area_style1'))
-  noticeElement.addClass('system_notice_area_style1');
+  if(noticeElement.hasClass('xyz_ihs_system_notice_area_style0'))
+  noticeElement.removeClass('xyz_ihs_system_notice_area_style0')
+  if(! noticeElement.hasClass('xyz_ihs_system_notice_area_style1'))
+  noticeElement.addClass('xyz_ihs_system_notice_area_style1');
 
   }
   noticeElement.animate({
@@ -429,9 +429,9 @@ else{
 
 
   let noticeElementString = 
-  `<div class="system_notice_area_style${flag}" id="xyz_system_notice_area">
+  `<div class="system_notice_area_style${flag}" id="xyz_ihs_system_notice_area">
     <span id="system_notice_area_common_msg">${msg}.&nbsp;&nbsp;&nbsp;</span>
-    <span id="xyz_system_notice_area_dismiss">Dismiss</span>
+    <span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
   </div>`;
 
   let noticeElement = jQuery(noticeElementString);

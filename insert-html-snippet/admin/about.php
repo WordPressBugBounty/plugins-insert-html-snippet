@@ -20,7 +20,7 @@ can be used in your pages, posts and widgets.  Insert HTML Snippet is developed 
 	plugins for your reference.
 </p>
  </div>
- <table class="xyz-premium-comparison" cellspacing=0 style="width: 99%;">
+ <table class="xyz-ihs-premium-comparison" cellspacing=0 style="width: 99%;">
 	<tr style="background-color: #EDEDED">
 		<td><h2>Feature group</h2></td>
 		<td><h2>Feature</h2></td>
@@ -270,7 +270,7 @@ can be used in your pages, posts and widgets.  Insert HTML Snippet is developed 
 	<tr>
 		<td>Purchase</td>
 		<td></td>
-		<td style="padding: 2px" ><a target="_blank"href="https://xyzscripts.com/members/product/purchase/XYZWPICSPRE"  class="xyz-buy-button">Buy Now</a>
+		<td style="padding: 2px" ><a target="_blank"href="https://xyzscripts.com/members/product/purchase/XYZWPICSPRE"  class="xyz_ihs_buy_button">Buy Now</a>
 		</td>
 	</tr>
 

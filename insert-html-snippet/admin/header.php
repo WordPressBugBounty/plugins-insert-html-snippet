@@ -49,9 +49,9 @@ if(!$_POST && (isset($_GET['ihs_blink'])&&isset($_GET['ihs_blink'])=='en')){
 
 
 ?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 Thank you for enabling backlink.
- &nbsp;&nbsp;&nbsp;<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+ &nbsp;&nbsp;&nbsp;<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <style type="text/css">
 	.xyz_blink{

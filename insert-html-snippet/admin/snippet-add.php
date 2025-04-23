@@ -42,27 +42,27 @@ if(isset($_POST) && isset($_POST['addSubmit'])){
 			}
 			else{
 ?>
-<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
 	HTML Snippet already exists. &nbsp;&nbsp;&nbsp;
-	<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+	<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php	
 			}
 		}
 		else{
 ?>
-<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
 	HTML Snippet title can have only alphabets,numbers or hyphen. &nbsp;&nbsp;&nbsp;
-	<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+	<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 		}
 	}
 	else{
 ?>		
-<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
 	Fill all mandatory fields. &nbsp;&nbsp;&nbsp;
-	<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+	<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php 
 		}

@@ -13,9 +13,9 @@ if(isset($_GET['xyz_ihs_msg'])){
 if($xyz_ihs_message == 1){
 
 	?>
-<div class="xyz_system_notice_area_style1" id="xyz_system_notice_area">
+<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 HTML Snippet successfully updated.&nbsp;&nbsp;&nbsp;<span
-id="xyz_system_notice_area_dismiss">Dismiss</span>
+id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
 <?php
 }
@@ -72,8 +72,8 @@ else{
 		}
 		else{
 			?>
-			<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
-			HTML Snippet already exists. &nbsp;&nbsp;&nbsp;<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+			<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
+			HTML Snippet already exists. &nbsp;&nbsp;&nbsp;<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 			</div>
 			<?php	
 	
@@ -82,8 +82,8 @@ else{
 		else
 		{
 			?>
-		<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
-		HTML Snippet title can have only alphabets,numbers or hyphen. &nbsp;&nbsp;&nbsp;<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+		<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
+		HTML Snippet title can have only alphabets,numbers or hyphen. &nbsp;&nbsp;&nbsp;<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 		</div>
 		<?php
 		
@@ -92,8 +92,8 @@ else{
 	
 	}else{
 ?>		
-		<div class="xyz_system_notice_area_style0" id="xyz_system_notice_area">
-			Fill all mandatory fields. &nbsp;&nbsp;&nbsp;<span id="xyz_system_notice_area_dismiss">Dismiss</span>
+		<div class="xyz_ihs_system_notice_area_style0" id="xyz_ihs_system_notice_area">
+			Fill all mandatory fields. &nbsp;&nbsp;&nbsp;<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 		</div>
 <?php 
 		}
