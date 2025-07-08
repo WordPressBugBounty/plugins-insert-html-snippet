@@ -38,7 +38,7 @@ if(isset($_POST) && isset($_POST['addSubmit'])){
 			if($snippet_count == 0){
 				$xyz_shortCode = '[xyz-ihs snippet="'.$xyz_ihs_title.'"]';
 				$wpdb->insert($wpdb->prefix.'xyz_ihs_short_code', array('title' =>$xyz_ihs_title,'insertionMethod' => $xyz_ihs_insertionMethod, 'insertionLocation' => $xyz_ihs_insertionLocation, 'insertionLocationType' => $xyz_ihs_insertionLocationType,'content'=>$xyz_ihs_content,'short_code'=>$xyz_shortCode,'status'=>'1'),array('%s','%s','%s','%d'));
-					header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=1'));
+				wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=1'));
 			}
 			else{
 ?>
@@ -101,7 +101,7 @@ wp_nonce_field('ihs-add_');
 							</font>
 						</td>
 						<td style="border-bottom: none;width:1px;">
-							&nbsp;&nbsp;
+						&nbsp;:&nbsp;
 						</td>
 						<td>
 							<select class="xyz_ihs_uniq_select" name="xyz_ihs_insertionMethod"
@@ -124,8 +124,8 @@ wp_nonce_field('ihs-add_');
                                 *
                             </font>
                         </td>
-                        <td style="border-bottom: none;width:1px;">
-                            &nbsp;&nbsp;
+                        <td style="border-bottom: none;width:1px;">&nbsp;:&nbsp;
+                           
                         </td>
                         <td>
                             <div>

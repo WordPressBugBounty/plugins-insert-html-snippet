@@ -3,7 +3,7 @@
 Plugin Name: Insert HTML Snippet
 Plugin URI: http://xyzscripts.com/wordpress-plugins/insert-html-snippet/
 Description: Add HTML code to your pages and posts easily using shortcodes. This plugin lets you create a shortcode corresponding to any random HTML code such as ad codes, javascript, video embedding, etc. and use the same in your posts, pages or widgets.It also includes flexible snippet placement options: Automatic and Manual Shortcode.
-Version: 1.4.1
+Version: 1.4.2
 Author: xyzscripts.com
 Author URI: http://xyzscripts.com/
 Text Domain: insert-html-snippet
@@ -75,5 +75,37 @@ function xyz_ihs_check_and_upgrade_plugin_version() {
 		xyz_ihs_run_upgrade_routines();
 		update_option('xyz_ihs_free_version', $current_version);
 	}
+}
+add_filter('plugin_action_links_' . plugin_basename(XYZ_INSERT_HTML_PLUGIN_FILE), 'xyz_ihs_plugin_action_links');
+function xyz_ihs_plugin_action_links($links) {
+    if (isset($links['deactivate'])) {
+        if (preg_match('/href=[\'"]([^\'"]+)[\'"]/', $links['deactivate'], $matches)) {
+            $ihs_deactivation_url = esc_url($matches[1]);
+            $links['deactivate'] = '<a href="' . $ihs_deactivation_url . '" class="xyz-ihs-deactivate-link">Deactivate</a>';
+        }
+    }
+    return $links;
+}
+add_action('admin_enqueue_scripts', 'xyz_ihs_enqueue_modal_assets');
+function xyz_ihs_enqueue_modal_assets($hook) {
+    if ($hook !== 'plugins.php') return;
+    add_action('admin_footer', 'xyz_ihs_modal_html');
+}
+function xyz_ihs_modal_html() {
+    ?>
+    <div id="xyz-ihs-modal" class="xyz-ihs-modal-overlay" style="display:none;">
+        <div class="xyz-ihs-modal-box">
+            <h2>Are you sure you want to deactivate?</h2>
+			<p>
+    			<span class="dashicons dashicons-warning" style="color: #d63638; font-size: 20px; vertical-align: middle;"></span>
+   				<strong> <u>Deleting</u> Insert HTML Snippet <u>afterward</u> will permanently remove all saved snippets. Shortcodes using them will stop working.</strong>
+			</p>
+            <div class="xyz-ihs-modal-buttons">
+                <button id="xyz-ihs-proceed-deactivate" class="button button-primary">Proceed to Deactivate</button>
+                <button id="xyz-ihs-cancel-deactivate" class="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <?php
 }
 ?>

@@ -49,16 +49,16 @@ if (isset($_POST) && isset($_POST['xyz_ihs_send_mail']))
 		$xyz_ihs_headers = array('From: '.$xyz_ihs_admin_username.' <'. $xyz_ihs_sender_email .'>' ,'Content-Type: text/html; charset=UTF-8');
 		$wp_mail_processed=wp_mail( $xyz_ihs_recv_email, $xyz_ihs_mail_subject, $xyz_ihs_feature_content, $xyz_ihs_headers );
 		if ($wp_mail_processed==true){
-		 header("Location:".admin_url('admin.php?page=insert-html-snippet-suggest-features&xyz_ihs_msg=1'));
+			wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-suggest-features&xyz_ihs_msg=1'));
 		 exit();
 		}
 		else 
 		{
-			header("Location:".admin_url('admin.php?page=insert-html-snippet-suggest-features&xyz_ihs_msg=2'));exit();
+			wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-suggest-features&xyz_ihs_msg=2'));exit();
 		}
 	}
 	else {
-		header("Location:".admin_url('admin.php?page=insert-html-snippet-suggest-features&xyz_ihs_msg=3'));exit();
+		wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-suggest-features&xyz_ihs_msg=3'));exit();
 	}
 }?>
 <form method="post" >

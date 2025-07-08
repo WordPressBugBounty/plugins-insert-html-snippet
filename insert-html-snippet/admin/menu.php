@@ -77,8 +77,8 @@ function xyz_ihs_add_style_script(){
 
 	wp_enqueue_script('jquery');
 	
-	wp_register_script( 'xyz_notice_script', plugins_url('js/notice.js', XYZ_INSERT_HTML_PLUGIN_FILE ));
-	wp_enqueue_script( 'xyz_notice_script' );
+	wp_register_script( 'xyz_ihs_notice_script', plugins_url('js/notice.js', XYZ_INSERT_HTML_PLUGIN_FILE ));
+	wp_enqueue_script( 'xyz_ihs_notice_script' );
 	
 	
 	// Register stylesheets

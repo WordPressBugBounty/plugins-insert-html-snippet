@@ -67,7 +67,7 @@ else{
 			
 			$wpdb->update($wpdb->prefix.'xyz_ihs_short_code', array('title'=>$xyz_ihs_title,'insertionMethod' => $xyz_ihs_insertionMethod, 'insertionLocation' => $xyz_ihs_insertionLocation, 'insertionLocationType' => $xyz_ihs_insertionLocationType,'content'=>$xyz_ihs_content,'short_code'=>$xyz_shortCode,), array('id'=>$xyz_ihs_snippetId));
 			
-			header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-edit&snippetId='.$xyz_ihs_snippetId.'&xyz_ihs_msg=1'.'&goback='.$goback));
+			wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-edit&snippetId='.$xyz_ihs_snippetId.'&xyz_ihs_msg=1'.'&goback='.$goback));
 	
 		}
 		else{
@@ -144,7 +144,7 @@ $xyz_ihs_insertionLocation = $snippetDetails->insertionLocation;
                             </font>
                         </td>
                         <td style="border-bottom: none;width:1px;">
-                            &nbsp;&nbsp;
+						&nbsp;:&nbsp;
                         </td>
                         <td>
                             <select class="xyz_ihs_uniq_select" name="xyz_ihs_insertionMethod"
@@ -169,7 +169,7 @@ $xyz_ihs_insertionLocation = $snippetDetails->insertionLocation;
                             </font>
                         </td>
                         <td style="border-bottom: none;width:1px;">
-                            &nbsp;&nbsp;
+						&nbsp;:&nbsp;
                         </td>
                         <td>
                             <div>

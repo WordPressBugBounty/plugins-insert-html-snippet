@@ -11,5 +11,17 @@
 			}, 500);
 
 		});
+		let ihs_deactivateURL = '';
 
+		jQuery(document).on('click', '.xyz-ihs-deactivate-link', function(e) {
+			e.preventDefault();
+			ihs_deactivateURL = jQuery(this).attr('href');
+			jQuery('#xyz-ihs-modal').fadeIn();
+		});
+		jQuery('#xyz-ihs-proceed-deactivate').on('click', function() {
+			window.location.href = ihs_deactivateURL;
+		});
+		jQuery('#xyz-ihs-cancel-deactivate').on('click', function() {
+			jQuery('#xyz-ihs-modal').fadeOut();
+		});
 	});

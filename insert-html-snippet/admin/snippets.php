@@ -26,20 +26,22 @@ if ( ! defined( 'ABSPATH' ) )
         //      }
         //  }
         if (isset($_POST['apply_ihs_bulk_actions'])){
-            if (isset($_POST['ihs_bulk_actions_snippet'])){
+            if (isset($_POST['ihs_bulk_actions_snippet']))
+			{
 	    if(!isset($_REQUEST['_wpnonce'])||!wp_verify_nonce($_REQUEST['_wpnonce'],'bulk_actions_ihs') )
             {
                  wp_nonce_ays( 'bulk_actions_ihs' );
                  exit;
              }
-                $ihs_bulk_actions_snippet=$_POST['ihs_bulk_actions_snippet'];
-                if (isset($_POST['xyz_ihs_snippet_ids']))
-                    $xyz_ihs_snippet_ids = $_POST['xyz_ihs_snippet_ids'];
+                $ihs_bulk_actions_snippet=intval($_POST['ihs_bulk_actions_snippet']);
+				$xyz_ihs_snippet_ids = [];
+                if (isset($_POST['xyz_ihs_snippet_ids']) && is_array($_POST['xyz_ihs_snippet_ids']))
+                    $xyz_ihs_snippet_ids = array_map('intval', $_POST['xyz_ihs_snippet_ids']);
                     $xyz_ihs_pageno = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
                     
                     if (empty($xyz_ihs_snippet_ids))
                     {
-                        header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=8&pagenum='.$xyz_ihs_pageno));
+                        wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=8&pagenum='.$xyz_ihs_pageno));
                         exit();
                     }
                     if ($ihs_bulk_actions_snippet==2)//bulk-delete
@@ -48,26 +50,26 @@ if ( ! defined( 'ABSPATH' ) )
                         {
                             $wpdb->query($wpdb->prepare( 'DELETE FROM  '.$wpdb->prefix.'xyz_ihs_short_code  WHERE id=%d',$snippet_id)) ;
                         }
-                        header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=3&pagenum='.$xyz_ihs_pageno));
+                        wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=3&pagenum='.$xyz_ihs_pageno));
                         exit();
                     }
                     elseif ($ihs_bulk_actions_snippet==0)//bulk-Deactivate
                     {
                         foreach ($xyz_ihs_snippet_ids as $xyz_ihs_snippetId)
                             $wpdb->update($wpdb->prefix.'xyz_ihs_short_code', array('status'=>2), array('id'=>$xyz_ihs_snippetId));
-                            header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=4&pagenum='.$xyz_ihs_pageno));
+                            wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=4&pagenum='.$xyz_ihs_pageno));
                             exit();
                     }
                     elseif ($ihs_bulk_actions_snippet==1)//bulk-activate
                     {
                         foreach ($xyz_ihs_snippet_ids as $xyz_ihs_snippetId)
                             $wpdb->update($wpdb->prefix.'xyz_ihs_short_code', array('status'=>1), array('id'=>$xyz_ihs_snippetId));
-                            header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=4&pagenum='.$xyz_ihs_pageno));
+                            wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=4&pagenum='.$xyz_ihs_pageno));
                             exit();
                     }
                     elseif ($ihs_bulk_actions_snippet==-1)//no action selected
                     {
-                        header("Location:".admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=7&pagenum='.$xyz_ihs_pageno));
+                        wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=7&pagenum='.$xyz_ihs_pageno));
                         exit();
                     }
             }

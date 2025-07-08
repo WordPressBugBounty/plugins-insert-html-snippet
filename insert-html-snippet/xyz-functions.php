@@ -22,12 +22,10 @@ function xyz_ihs_run_upgrade_routines() {
 		foreach ($blog_ids as $blog_id) {
 			switch_to_blog($blog_id);
 			xyz_ihs_install();
-			wp_cache_flush();
 			restore_current_blog();
 		}
 	} else {
 		xyz_ihs_install();
-		wp_cache_flush();
 	}
 }
 }
