@@ -138,6 +138,9 @@ HTML Snippet successfully updated.&nbsp;&nbsp;&nbsp;
 <span
 id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
 </div>
+<div class="notice notice-success is-dismissible">
+	<p><strong>HTML Snippet successfully updated. &nbsp;&nbsp;&nbsp;</strong></p>
+</div>
 <?php
 }
 if($xyz_ihs_message == 7)
@@ -274,7 +277,7 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 					<td style="vertical-align: middle !important;padding-left: 18px;">
 					<input type="checkbox" class="chk" value="<?php echo $snippetId; ?>" name="xyz_ihs_snippet_ids[]" id="xyz_ihs_snippet_ids" />
 					</td>
-						<td id="xyz_ihs_vAlign"><?php 
+						<td id="xyz_ihs_vAlign" title="<?php echo esc_attr($entry->description); ?>" ><?php 
 						echo esc_html($entry->title);
 						?></td>
 <td id="xyz_ihs_vAlign">

@@ -16,6 +16,7 @@ if(isset($_POST) && isset($_POST['addSubmit'])){
 	$temp_xyz_ihs_title = str_replace(' ', '', $_POST['snippetTitle']);
 	$temp_xyz_ihs_title = str_replace('-', '', $temp_xyz_ihs_title);
 	$xyz_ihs_title = str_replace(' ', '-', $_POST['snippetTitle']);
+    $xyz_ihs_snippetDescription=sanitize_text_field($_POST['xyz_ihs_snippetDescription']);
     $xyz_ihs_insertionMethod = intval($_POST['xyz_ihs_insertionMethod']);
     $xyz_ihs_insertionLocation = intval($_POST['xyz_ihs_insertionLocation']);
 
@@ -37,7 +38,7 @@ if(isset($_POST) && isset($_POST['addSubmit'])){
 			
 			if($snippet_count == 0){
 				$xyz_shortCode = '[xyz-ihs snippet="'.$xyz_ihs_title.'"]';
-				$wpdb->insert($wpdb->prefix.'xyz_ihs_short_code', array('title' =>$xyz_ihs_title,'insertionMethod' => $xyz_ihs_insertionMethod, 'insertionLocation' => $xyz_ihs_insertionLocation, 'insertionLocationType' => $xyz_ihs_insertionLocationType,'content'=>$xyz_ihs_content,'short_code'=>$xyz_shortCode,'status'=>'1'),array('%s','%s','%s','%d'));
+				$wpdb->insert($wpdb->prefix.'xyz_ihs_short_code', array('title' =>$xyz_ihs_title,'description'=>$xyz_ihs_snippetDescription,'insertionMethod' => $xyz_ihs_insertionMethod, 'insertionLocation' => $xyz_ihs_insertionLocation, 'insertionLocationType' => $xyz_ihs_insertionLocationType,'content'=>$xyz_ihs_content,'short_code'=>$xyz_shortCode,'status'=>'1'),array('%s','%s','%d','%d','%d','%s','%s','%d'));
 				wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&xyz_ihs_msg=1'));
 			}
 			else{
@@ -181,6 +182,20 @@ wp_nonce_field('ihs-add_');
 <?php if(isset($_POST['snippetTitle'])){ echo esc_attr($_POST['snippetTitle']);}?>">
 						</td>
 					</tr>
+                    <tr valign="top">
+                        <td style="border-bottom: none;width:20%;">
+                            &nbsp;&nbsp;&nbsp;Description &nbsp;
+                        </td>
+                        <td style="border-bottom: none;width:1px;">
+                        </td>
+                        <td>
+                        <textarea id="xyz_ihs_snippetDescription"  name="xyz_ihs_snippetDescription" style="resize: both;width:80%;"><?php
+                            if (isset($_POST['xyz_ihs_snippetDescription'])) {
+                                echo esc_attr(sanitize_text_field($_POST['xyz_ihs_snippetDescription']));
+                            } 
+                            ?></textarea>
+                        </td>
+                    </tr>
 					<tr>
 						<td style="border-bottom: none;width:20%; ">
 							&nbsp;&nbsp;&nbsp;HTML code &nbsp;

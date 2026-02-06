@@ -61,9 +61,12 @@ Thanks again for using the plugin. We will never show the message again.
 			update_option('xyz_ihs_exec_in_editor',$xyz_ihs_exec_in_editor);
 
 ?>
-<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
+<!-- <div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 	Settings updated successfully. &nbsp;&nbsp;&nbsp;
 	<span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
+</div> -->
+			<div class="notice notice-success is-dismissible">
+                <p><strong>Settings updated successfully. &nbsp;&nbsp;&nbsp;</strong></p>
 </div>
 <?php
 		}

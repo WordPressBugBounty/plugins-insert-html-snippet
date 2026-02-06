@@ -29,6 +29,13 @@ if(get_option('xyz_ihs_premium_version_ads')==1){?>
 <div style="clear: both;">
 </div>
 <div class="xyz-ihs-wrap">
+<div class="xyz-ihs-footer-contact">
+    🚀 <span style="font-style: italic;font-size:larger;">We are available for custom development</span> — 
+    <a href="https://xyzscripts.com/support/" target="_blank">
+       Get a quote
+    </a>
+</div></div>
+<div class="xyz-ihs-wrap">
     <div class="xyz_ihs_social_media">
         <h3 class="xyz_ihs_inner_head">
             Follow Us

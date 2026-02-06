@@ -28,7 +28,16 @@ function xyz_ihs_install(){
 
 	$pluginName = 'xyz-wp-insert-code-snippet/xyz-wp-insert-code-snippet.php';
 if (is_plugin_active($pluginName)) {
-wp_die( "The plugin Insert HTML Snippet cannot be activated unless the premium version of this plugin is deactivated. Back to <a href='".admin_url()."plugins.php'>Plugin Installation</a>." );
+	wp_die( "The plugin Insert HTML Snippet cannot be activated unless the premium version of this plugin is deactivated. Back to <a href='".esc_url(admin_url())."plugins.php'>Plugin Installation</a>." );
+}
+	if ( version_compare( PHP_VERSION, '7.0.0', '<' ) ) {
+		wp_die(
+			sprintf(
+				'This plugin requires PHP version 7.0 or higher. You are using PHP %s. <a href="%s">Go back to Plugins page</a>.',
+				PHP_VERSION,
+				esc_url( admin_url( 'plugins.php' ) )
+			)
+		);
 }
 	if(get_option('xyz_ihs_sort_order')=='')
 	{
@@ -67,6 +76,7 @@ wp_die( "The plugin Insert HTML Snippet cannot be activated unless the premium v
 	$queryInsertHtml = "CREATE TABLE IF NOT EXISTS  ".$wpdb->prefix."xyz_ihs_short_code (
 	  `id` int NOT NULL AUTO_INCREMENT,
 		  `title` varchar(1000) NOT NULL,
+		  `description` TEXT NULL ,
            `content` longtext  NOT NULL,
 		  `short_code` varchar(2000) NOT NULL,
 		  `status` int NOT NULL,
@@ -80,6 +90,8 @@ wp_die( "The plugin Insert HTML Snippet cannot be activated unless the premium v
 	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD insertionLocation int NOT NULL default 0");
 	if(!(in_array("insertionLocationType", $tblcolums)))
 	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD insertionLocationType int NOT NULL default 0");
+	if(!(in_array("description", $tblcolums)))
+	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD description TEXT NULL ");
 }
 
 register_activation_hook( XYZ_INSERT_HTML_PLUGIN_FILE ,'xyz_ihs_network_install');

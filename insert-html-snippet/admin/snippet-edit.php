@@ -13,9 +13,12 @@ if(isset($_GET['xyz_ihs_msg'])){
 if($xyz_ihs_message == 1){
 
 	?>
-<div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
+<!-- <div class="xyz_ihs_system_notice_area_style1" id="xyz_ihs_system_notice_area">
 HTML Snippet successfully updated.&nbsp;&nbsp;&nbsp;<span
 id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
+</div> -->
+			<div class="notice notice-success is-dismissible">
+                <p><strong>HTML Snippet successfully updated. &nbsp;&nbsp;&nbsp;</strong></p>
 </div>
 <?php
 }
@@ -42,6 +45,7 @@ if(isset($_POST) && isset($_POST['updateSubmit'])){
 	$temp_xyz_ihs_title = str_replace('-', '', $temp_xyz_ihs_title);
 	
 	$xyz_ihs_title = str_replace(' ', '-', $_POST['snippetTitle']);
+	$xyz_ihs_snippetDescription=sanitize_text_field($_POST['xyz_ihs_snippetDescription']);
 	$xyz_ihs_content = $_POST['snippetContent'];
     $xyz_ihs_insertionMethod = intval($_POST['xyz_ihs_insertionMethod']);
     $xyz_ihs_insertionLocation = intval($_POST['xyz_ihs_insertionLocation']);
@@ -65,7 +69,7 @@ else{
 		if($snippet_count == 0){
 			$xyz_shortCode = '[xyz-ihs snippet="'.$xyz_ihs_title.'"]';
 			
-			$wpdb->update($wpdb->prefix.'xyz_ihs_short_code', array('title'=>$xyz_ihs_title,'insertionMethod' => $xyz_ihs_insertionMethod, 'insertionLocation' => $xyz_ihs_insertionLocation, 'insertionLocationType' => $xyz_ihs_insertionLocationType,'content'=>$xyz_ihs_content,'short_code'=>$xyz_shortCode,), array('id'=>$xyz_ihs_snippetId));
+			$wpdb->update($wpdb->prefix.'xyz_ihs_short_code', array('title'=>$xyz_ihs_title,'description'=>$xyz_ihs_snippetDescription,'insertionMethod' => $xyz_ihs_insertionMethod, 'insertionLocation' => $xyz_ihs_insertionLocation, 'insertionLocationType' => $xyz_ihs_insertionLocationType,'content'=>$xyz_ihs_content,'short_code'=>$xyz_shortCode,), array('id'=>$xyz_ihs_snippetId));
 			
 			wp_safe_redirect(admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-edit&snippetId='.$xyz_ihs_snippetId.'&xyz_ihs_msg=1'.'&goback='.$goback));
 	
@@ -135,6 +139,14 @@ $xyz_ihs_insertionLocation = $snippetDetails->insertionLocation;
 						<td><input style="width:80%;"
 							type="text" name="snippetTitle" id="snippetTitle"
 							value="<?php if(isset($_POST['snippetTitle'])){ echo esc_attr($_POST['snippetTitle']);}else{ echo esc_attr($snippetDetails->title); }?>"></td>
+					</tr>
+					<tr valign="top">
+						<td style="border-bottom: none;width:20%;">&nbsp;&nbsp;&nbsp;Description &nbsp;</td>
+						<td style="border-bottom: none;width:1px;">&nbsp;:&nbsp;</td>
+						<td>
+							<textarea id="xyz_ihs_snippetDescription"  name="xyz_ihs_snippetDescription" style="resize: both;width:80%;"><?php
+                           if(isset($_POST['xyz_ihs_snippetDescription'])){ echo esc_attr($_POST['xyz_ihs_snippetDescription']);}else{ echo esc_attr($snippetDetails->description); } ?></textarea>
+						</td>
 					</tr>
                     <tr valign="top">
                         <td style="border-bottom: none;width:20%;">

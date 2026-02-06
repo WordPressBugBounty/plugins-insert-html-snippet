@@ -76,13 +76,14 @@ function xyz_ihs_suggest_feature(){
 function xyz_ihs_add_style_script(){
 
 	wp_enqueue_script('jquery');
-	
-	wp_register_script( 'xyz_ihs_notice_script', plugins_url('js/notice.js', XYZ_INSERT_HTML_PLUGIN_FILE ));
+	$current_version = xyz_ihs_plugin_get_version();
+	// Register and enqueue script with versioning
+	wp_register_script( 'xyz_ihs_notice_script', plugins_url('js/notice.js', XYZ_INSERT_HTML_PLUGIN_FILE ),array(),$current_version);
 	wp_enqueue_script( 'xyz_ihs_notice_script' );
 	
 	
 	// Register stylesheets
-	wp_register_style('xyz_ihs_style',plugins_url('css/xyz_ihs_styles.css', XYZ_INSERT_HTML_PLUGIN_FILE ));
+	wp_register_style('xyz_ihs_style',plugins_url('css/xyz_ihs_styles.css', XYZ_INSERT_HTML_PLUGIN_FILE ),array(),$current_version);
 	wp_enqueue_style('xyz_ihs_style');
 }
 add_action('admin_enqueue_scripts', 'xyz_ihs_add_style_script');
