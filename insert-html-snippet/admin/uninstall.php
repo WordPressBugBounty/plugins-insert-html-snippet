@@ -33,9 +33,10 @@ delete_option('xyz_ihs_credit_dismiss');
 delete_option('xyz_ihs_premium_version_ads');
 delete_option('xyz_ihs_exec_in_editor');
 delete_option('xyz_ihs_free_version');
+delete_option('xyz_ihs_sync_needed');
 /* table delete*/
 $wpdb->query("DROP TABLE ".$wpdb->prefix."xyz_ihs_short_code");
-
+$wpdb->query("DROP TABLE ".$wpdb->prefix."xyz_ihs_usage");
 }
 register_uninstall_hook( XYZ_INSERT_HTML_PLUGIN_FILE, 'xyz_ihs_network_uninstall' );
 ?>

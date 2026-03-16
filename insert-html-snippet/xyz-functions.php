@@ -65,5 +65,60 @@ function xyz_ihs_links($links, $file) {
 }
 }
 add_filter( 'plugin_row_meta','xyz_ihs_links',10,2);
+if(!function_exists('xyz_ihs_get_insertion_location_label')){
+function xyz_ihs_get_insertion_location_label($value) {
+    $map = array_flip(XYZ_IHS_INSERTION_LOCATION);
 
+    if (!isset($map[$value])) {
+        return '';
+    }
+    // Convert constant-style key to readable text
+    return ucwords(strtolower(str_replace('_', ' ', $map[$value])));
+	}
+}
+if(!function_exists('xyz_ihs_get_insertion_location_type_label')){
+function xyz_ihs_get_insertion_location_type_label($value) {
+    $map = array_flip(XYZ_IHS_INSERTION_LOCATION_TYPE);
+    if (!isset($map[$value])) {
+        return '';
+    }
+    return ucwords(strtolower(str_replace('_', ' ', $map[$value])));
+}
+}
+	if(!function_exists('xyz_ihs_update_usage_for_post')){
+	// --- Tracking Logic ---
+	function xyz_ihs_update_usage_for_post($post_id, $content, $post_type = 'post') {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'xyz_ihs_usage';
+		if (strpos($content, '[xyz-ihs') === false) {
+			$wpdb->delete($table_name, ['post_id' => $post_id]);
+			return;
+		}
+		$wpdb->delete($table_name, ['post_id' => $post_id]);
+		preg_match_all('/\[xyz-ihs([^\]]*)\]/', $content, $shortcodes);
+		$titles = [];
+		if (!empty($shortcodes[1])) {
+			foreach ($shortcodes[1] as $attr_string) {
+				$atts = shortcode_parse_atts($attr_string);
+				if (!empty($atts['snippet'])) {
+					$titles[] = $atts['snippet'];
+				}
+			}
+		}
+		$unique_snippets = array_unique($titles);
+		foreach ($unique_snippets as $title) {
+			$s_id = $wpdb->get_var($wpdb->prepare(
+				"SELECT id FROM {$wpdb->prefix}xyz_ihs_short_code WHERE title = %s",
+				$title
+			));
+			if ($s_id) {
+				$wpdb->insert($table_name, [
+					'post_id'    => $post_id,
+					'snippet_id' => $s_id,
+					'post_type'  => $post_type
+				]);
+			}
+		}
+	}
+	}
 ?>

@@ -4,13 +4,16 @@
 			height : 'show'
 		}, 500);
 
-		jQuery('#xyz_ihs_system_notice_area_dismiss').click(function() {
+		jQuery(document).on(
+			'click',
+			'#xyz_ihs_system_notice_area_dismiss',
+			function () {
 			jQuery('#xyz_ihs_system_notice_area').animate({
 				opacity : 'hide',
 				height : 'hide'
 			}, 500);
-
-		});
+			}
+		  );
 		let ihs_deactivateURL = '';
 
 		jQuery(document).on('click', '.xyz-ihs-deactivate-link', function(e) {

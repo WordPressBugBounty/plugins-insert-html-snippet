@@ -3,6 +3,19 @@ if ( ! defined( 'ABSPATH' ) )
     exit;
     
     global $wpdb;
+	if (get_option('xyz_ihs_sync_needed') != 0) {
+		echo '<div id="ics-sync-notice" class="notice notice-warning is-dismissible">
+				<p>
+					<strong>Usage Tracking Sync Required.</strong><br>
+					Your site needs a one-time synchronization to build snippet usage records.
+					This helps in displaying accurate usage statistics.
+					<button id="xyz-start-sync" class="button button-primary"  data-offset ="'. get_option('xyz_ihs_sync_needed').'">
+						'.(get_option('xyz_ihs_sync_needed') > 1 ? 'Resume Sync' : 'Start Sync').'
+					</button>
+					<span id="sync-progress" style="margin-left:10px;"></span>
+				</p>
+			  </div>';
+	  }
     $_GET = stripslashes_deep($_GET);
     $xyz_ihs_message = $search_name_db=$search_name='';
    
@@ -172,7 +185,7 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 	<form method="post">
 		<?php wp_nonce_field( 'bulk_actions_ihs');?>
  		<fieldset
-			style="width: 99%; border: 1px solid #F7F7F7; padding: 10px 0px;">
+			style="width: 98.8%; border: 1px solid #4d3e3e2e; padding: 10px 0px;">
 			<legend><h3>HTML Snippets</h3></legend>
 			<?php 
 			global $wpdb;
@@ -255,9 +268,9 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 					<tr>
 					<th scope="col" width="3%"><input type="checkbox" id="chkAllSnippets" /></th>
 						<th scope="col" >Tracking Name</th>
-			<th scope="col">Snippet Placement 
+			<th scope="col">Snippet Placement</th>
+			<th scope="col">Placement Details</th>
 
-</th>
 						<th scope="col" >Status</th>
 						<th scope="col" colspan="3" style="text-align: center;">Action</th>
 					</tr>
@@ -278,20 +291,57 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 					<input type="checkbox" class="chk" value="<?php echo $snippetId; ?>" name="xyz_ihs_snippet_ids[]" id="xyz_ihs_snippet_ids" />
 					</td>
 						<td id="xyz_ihs_vAlign" title="<?php echo esc_attr($entry->description); ?>" ><?php 
-						echo esc_html($entry->title);
-						?></td>
+						echo esc_html($entry->title); ?></td>
 <td id="xyz_ihs_vAlign">
     <?php 
+$placement_text = '';
     if ($entry->status == 2) {
-        echo 'NA';
+
+    $placement_text = 'NA';
     } else { 
-        echo ($entry->insertionMethod == 1) ? 
-            'Automatic' : 
-            (($entry->insertionMethod == 2) ? 
-                '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')" class="xyz_ihs_copy_shortcode" id="xyz_ihs_shortcode_' . $entry->id . '">[xyz-ihs snippet="' . esc_html($entry->title) . '"]</span>' .
-                '<span onclick="xyz_ihs_copy_shortcode(' . $entry->id . ')"><img class="xyz_ihs_img xyz_ihs_img_table" title="Click to copy" src="' . plugins_url('insert-html-snippet/images/copy-document.png') . '"></span>' 
-            : 
-            '');
+    /* AUTOMATIC PLACEMENT */
+    if ($entry->insertionMethod == 1) {
+
+        $placement_text =
+            '<span class="ihs-badge ihs-badge-auto">Automatic</span>';
+    }
+    /* SHORTCODE PLACEMENT */
+    elseif ($entry->insertionMethod == 2) {
+
+
+        $placement_text =
+            '<span class="ihs-badge ihs-badge-shortcode">Shortcode</span> ' .
+            '<span onclick="xyz_ihs_copy_shortcode(' . (int) $entry->id . ')" ' .
+            'class="xyz_ihs_copy_shortcode" id="xyz_ihs_shortcode_' . (int) $entry->id . '">' .
+            '[xyz-ihs snippet="' . esc_html($entry->title) . '"]</span>' .
+            '<span onclick="xyz_ihs_copy_shortcode(' . (int) $entry->id . ')">' .
+            '<img class="xyz_ihs_img xyz_ihs_img_table" title="Click to copy" ' .
+            'src="' . esc_url(plugins_url('insert-html-snippet/images/copy-document.png')) . '">' .
+            '</span>';
+    }
+}
+echo $placement_text;
+?>
+</td>
+		<td id="xyz_ihs_vAlign" style="color:#1c331cbf;">
+		<?php
+		if ($entry->status == 2) {
+			echo '—';
+		} elseif ($entry->insertionMethod == 1) {
+			if (!empty($entry->insertionLocation)) {
+				echo esc_html(
+					xyz_ihs_get_insertion_location_label($entry->insertionLocation)
+				);
+			} else {
+				echo '—';
+    }
+		} elseif ($entry->insertionMethod == 2) {
+			$post_count=0;
+			$post_count = $wpdb->get_var($wpdb->prepare(
+				"SELECT COUNT(*) FROM {$wpdb->prefix}xyz_ihs_usage WHERE snippet_id = %d", 
+				$entry->id
+			));
+			 echo $post_count ? "Used in $post_count posts/pages" : "Not used";
     }
     ?>
 </td>
@@ -384,6 +434,43 @@ jQuery(document).ready(function(){
 	jQuery("#chkAllSnippets").click(function(){
 		jQuery(".chk").prop("checked",jQuery("#chkAllSnippets").prop("checked"));
     }); 
+	    // Handling the Sync Button click
+		jQuery(document).on('click', '#xyz-start-sync', function(e) {
+    e.preventDefault();
+    let btn = jQuery(this);
+    let progress = jQuery('#sync-progress');
+    btn.prop('disabled', true).text('Syncing...');
+    // Read initial offset from button data attribute
+    let initialOffset = parseInt(btn.data('offset')) || 0;
+    function runSyncBatch(offset) {
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'xyz_ihs_sync_usage',
+                offset: offset
+            },
+            success: function(response) {
+                if (response.success && response.data.status === 'processing') {
+                    progress.text('Processed ' + response.data.new_offset + ' posts...');
+                    // Update button data-offset to keep track
+                    btn.data('offset', response.data.new_offset);
+                    runSyncBatch(response.data.new_offset);
+                } else {
+                    progress.text('✅ Sync Complete!');
+                    btn.prop('disabled', false).text('Sync Usage Now');
+                    btn.data('offset', 0); // reset offset
+                    location.reload(); 
+                }
+            },
+            error: function() {
+                progress.text('❌ Sync failed. Please try again.');
+                btn.prop('disabled', false).text('Sync Usage Now');
+            }
+        });
+    }
+    runSyncBatch(initialOffset);
+});
 });
 const xyz_ihs_copy_shortcode = (id) => {
 
@@ -434,7 +521,7 @@ else{
 
 
   let noticeElementString = 
-  `<div class="system_notice_area_style${flag}" id="xyz_ihs_system_notice_area">
+`<div class="xyz_ihs_system_notice_area_style${flag}" id="xyz_ihs_system_notice_area">
     <span id="system_notice_area_common_msg">${msg}.&nbsp;&nbsp;&nbsp;</span>
     <span id="xyz_ihs_system_notice_area_dismiss">Dismiss</span>
   </div>`;

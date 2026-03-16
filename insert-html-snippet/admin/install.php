@@ -92,6 +92,20 @@ if (is_plugin_active($pluginName)) {
 	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD insertionLocationType int NOT NULL default 0");
 	if(!(in_array("description", $tblcolums)))
 	$wpdb->query("ALTER TABLE ".$wpdb->prefix."xyz_ihs_short_code ADD description TEXT NULL ");
+	$table_name      = $wpdb->prefix . 'xyz_ihs_usage';
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE {$table_name} (
+		post_id BIGINT(20) UNSIGNED NOT NULL,
+		snippet_id BIGINT(20) UNSIGNED NOT NULL,
+		post_type VARCHAR(20) NOT NULL,
+		PRIMARY KEY  (post_id, snippet_id),
+		KEY post_id (post_id),
+		KEY snippet_id (snippet_id)
+	) {$charset_collate};";
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+	dbDelta($sql);
+	// Set sync flag 
+		add_option('xyz_ihs_sync_needed', 1);
 }
 
 register_activation_hook( XYZ_INSERT_HTML_PLUGIN_FILE ,'xyz_ihs_network_install');

@@ -524,6 +524,32 @@ text-decoration: underline;
         background: #e67e22;
         transform: scale(1.1);
     }
+    .xyz-ihs-usage {
+        color: #6c757d;   /* WP gray */
+        font-size: 12px;
+        margin-left: 6px;
+    }
+    .ihs-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 10px;
+        margin-right: 6px;
+        line-height: 1.4;
+        vertical-align: middle;
+    }
+    td#xyz_ihs_vAlign {
+        vertical-align: middle;
+    }
+    .ihs-badge-auto {
+        background-color: #e8f1ff;
+        color: #135e96; /* WP blue */
+    }
+    .ihs-badge-shortcode {
+        background-color: #e6f6ea;
+        color: #007c3a; /* WP green */
+    }
 
   @media screen and (max-width: 1351px) {
 
@@ -778,7 +804,8 @@ select#xyz_ihs_insertionLocation optgroup[label="Categories, Archives, Tags, Tax
 }
 .xyz_ihs_img_table
 {
-    float: right;
+    margin-left: 4px;
+    cursor: pointer;
 }
 .xyz_ihs_system_notice_area_style1 {
     position: absolute;
