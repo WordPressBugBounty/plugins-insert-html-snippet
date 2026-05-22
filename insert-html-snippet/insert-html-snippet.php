@@ -3,7 +3,7 @@
 Plugin Name: Insert HTML Snippet
 Plugin URI: http://xyzscripts.com/wordpress-plugins/insert-html-snippet/
 Description: Add HTML code to your pages and posts easily using shortcodes. This plugin lets you create a shortcode corresponding to any random HTML code such as ad codes, javascript, video embedding, etc. and use the same in your posts, pages or widgets.It also includes flexible snippet placement options: Automatic and Manual Shortcode.
-Version: 1.4.4
+Version: 1.4.5
 Author: xyzscripts.com
 Author URI: http://xyzscripts.com/
 Text Domain: insert-html-snippet
@@ -108,6 +108,7 @@ function xyz_ihs_modal_html() {
     </div>
     <?php
 }
+if (get_option('xyz_ihs_sync_needed') == 0){
 // --- update manual shortcode counts ---
 add_action('save_post', function($post_id, $post) {
     if (wp_is_post_autosave($post_id)) return;
@@ -128,4 +129,5 @@ add_action('before_delete_post', function($post_id) {
     global $wpdb;
     $wpdb->delete($wpdb->prefix . 'xyz_ihs_usage', ['post_id' => $post_id]);
 });
+}
 ?>

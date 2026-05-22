@@ -104,8 +104,12 @@ if (is_plugin_active($pluginName)) {
 	) {$charset_collate};";
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	dbDelta($sql);
-	// Set sync flag 
+		// Set sync flag only if not already set
+		if (get_option('xyz_ihs_sync_needed') === false) {
 		add_option('xyz_ihs_sync_needed', 1);
+		}
+		//Show Snippet Usage Details
+		add_option('xyz_ihs_show_snippet_usage',1);//default enable 
 }
 
 register_activation_hook( XYZ_INSERT_HTML_PLUGIN_FILE ,'xyz_ihs_network_install');

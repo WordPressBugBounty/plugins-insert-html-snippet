@@ -3,7 +3,8 @@ if ( ! defined( 'ABSPATH' ) )
     exit;
     
     global $wpdb;
-	if (get_option('xyz_ihs_sync_needed') != 0) {
+	if ((get_option('xyz_ihs_sync_needed') != 0) && (get_option('xyz_ihs_show_snippet_usage')==1)) 
+	{
 		echo '<div id="ics-sync-notice" class="notice notice-warning is-dismissible">
 				<p>
 					<strong>Usage Tracking Sync Required.</strong><br>
@@ -341,7 +342,13 @@ echo $placement_text;
 				"SELECT COUNT(*) FROM {$wpdb->prefix}xyz_ihs_usage WHERE snippet_id = %d", 
 				$entry->id
 			));
-			 echo $post_count ? "Used in $post_count posts/pages" : "Not used";
+			if ($post_count > 0 && (get_option('xyz_ihs_show_snippet_usage')==1)) {
+			  echo 'Used in ' . $count . ' posts/pages';
+			}else {
+			  if(get_option('xyz_ihs_show_snippet_usage')!=1)
+			  echo '<span title="Usage details are hidden. Enable &quot;Show Snippet Usage Details&quot; in settings." style="cursor: help;">Hidden</span>';      else
+				echo 'Not used';
+			}
     }
     ?>
 </td>

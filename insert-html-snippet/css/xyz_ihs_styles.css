@@ -747,6 +747,17 @@ text-decoration: underline;
  cursor: pointer;
     
 }
+.xyz_ihs_informationdiv {
+    background: none repeat scroll 0 0 #9FDAEE;
+    border: 1px solid #209BD4;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    float: left;
+    padding: 10px;
+    position: absolute;
+    z-index: 1200;
+    width: auto;
+}
 .xyz_ihs_insertionLocationDiv
 {
     display: flex;

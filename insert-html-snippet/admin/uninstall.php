@@ -34,6 +34,7 @@ delete_option('xyz_ihs_premium_version_ads');
 delete_option('xyz_ihs_exec_in_editor');
 delete_option('xyz_ihs_free_version');
 delete_option('xyz_ihs_sync_needed');
+delete_option('xyz_ihs_show_snippet_usage');
 /* table delete*/
 $wpdb->query("DROP TABLE ".$wpdb->prefix."xyz_ihs_short_code");
 $wpdb->query("DROP TABLE ".$wpdb->prefix."xyz_ihs_usage");

@@ -56,6 +56,8 @@ Thanks again for using the plugin. We will never show the message again.
 					update_option('xyz_ihs_sort_order',$xyz_ihs_sortorder);
 				}
 
+				$xyz_ihs_show_snippet_usage=intval($_POST['xyz_ihs_show_snippet_usage']);
+				update_option('xyz_ihs_show_snippet_usage',$xyz_ihs_show_snippet_usage);
 
 			update_option('xyz_ihs_limit',$xyz_ihs_limit);
 			update_option('xyz_ihs_exec_in_editor',$xyz_ihs_exec_in_editor);
@@ -142,6 +144,19 @@ Thanks again for using the plugin. We will never show the message again.
                             </select>
 						</td>
 					</tr>
+					<tr valign="top">
+			                        <td scope="row">
+			                            <label for="xyz_ihs_show_snippet_usage">Show Snippet Usage Details </label>
+										<img src="<?php echo plugins_url('insert-html-snippet/images/support.png')?>"  onmouseover="document.getElementById('xyz_ihs_usage_note').style.display = '';" onmouseout="document.getElementById('xyz_ihs_usage_note').style.display = 'none';">
+							<div id="xyz_ihs_usage_note" class="xyz_ihs_informationdiv" style="display: none;">Display where each snippet is used (posts/pages) within the admin panel.<br/>Usage data is maintained automatically after the initial sync.</div>
+			                        </td>
+			                        <td>
+			                            <select name="xyz_ihs_show_snippet_usage" id="xyz_ihs_show_snippet_usage">
+											<option value="0" <?php selected(get_option('xyz_ihs_show_snippet_usage'),0);?>>Disable</option>
+                                			<option value="1" <?php selected(get_option('xyz_ihs_show_snippet_usage'),1);?>>Enable</option>
+			                            </select>
+			                	</td>
+			                </tr>
 					<tr valign="top">
 						<td scope="row" class=" xyz_ihs_settingInput" id="xyz_ihs_bottomBorderNone">
 						</td>
