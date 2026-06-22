@@ -29,6 +29,7 @@ function xyz_ihs_run_upgrade_routines() {
 	}
 }
 }
+
 if(!function_exists('xyz_trim_deep'))
 {
 
@@ -36,11 +37,12 @@ if(!function_exists('xyz_trim_deep'))
 		if ( is_array($value) ) {
 			$value = array_map('xyz_trim_deep', $value);
 		} elseif ( is_object($value) ) {
-			$vars = get_object_vars( $value );
-			foreach ($vars as $key=>$data) {
+	
+			foreach (get_object_vars($value) as $key => $data) {
 				$value->{$key} = xyz_trim_deep( $data );
 			}
-		} else {
+	
+		} elseif (is_string($value)) {
 			$value = trim($value);
 		}
 
@@ -79,38 +81,52 @@ function xyz_ihs_get_insertion_location_label($value) {
 if(!function_exists('xyz_ihs_get_insertion_location_type_label')){
 function xyz_ihs_get_insertion_location_type_label($value) {
     $map = array_flip(XYZ_IHS_INSERTION_LOCATION_TYPE);
+
     if (!isset($map[$value])) {
         return '';
     }
+
     return ucwords(strtolower(str_replace('_', ' ', $map[$value])));
 }
 }
+	
 	if(!function_exists('xyz_ihs_update_usage_for_post')){
 	// --- Tracking Logic ---
 	function xyz_ihs_update_usage_for_post($post_id, $content, $post_type = 'post') {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'xyz_ihs_usage';
+	
 		if (strpos($content, '[xyz-ihs') === false) {
 			$wpdb->delete($table_name, ['post_id' => $post_id]);
 			return;
 		}
+	
 		$wpdb->delete($table_name, ['post_id' => $post_id]);
+	
 		preg_match_all('/\[xyz-ihs([^\]]*)\]/', $content, $shortcodes);
+	
 		$titles = [];
+	
 		if (!empty($shortcodes[1])) {
 			foreach ($shortcodes[1] as $attr_string) {
 				$atts = shortcode_parse_atts($attr_string);
-				if (!empty($atts['snippet'])) {
+				 // PHP 8.3 Compliance Fix: Ensure $atts is an array before checking the 'snippet' key
+				//if (!empty($atts['snippet'])) 
+				 if (is_array($atts) && !empty($atts['snippet']))
+				{
 					$titles[] = $atts['snippet'];
 				}
 			}
 		}
+	
 		$unique_snippets = array_unique($titles);
+	
 		foreach ($unique_snippets as $title) {
 			$s_id = $wpdb->get_var($wpdb->prepare(
 				"SELECT id FROM {$wpdb->prefix}xyz_ihs_short_code WHERE title = %s",
 				$title
 			));
+	
 			if ($s_id) {
 				$wpdb->insert($table_name, [
 					'post_id'    => $post_id,
@@ -121,4 +137,6 @@ function xyz_ihs_get_insertion_location_type_label($value) {
 		}
 	}
 	}
+
+
 ?>
