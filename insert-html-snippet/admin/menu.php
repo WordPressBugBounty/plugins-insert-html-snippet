@@ -77,13 +77,16 @@ function xyz_ihs_add_style_script(){
 
 	wp_enqueue_script('jquery');
 	$current_version = xyz_ihs_plugin_get_version();
-	// Register and enqueue script with versioning
-	wp_register_script( 'xyz_ihs_notice_script', plugins_url('js/notice.js', XYZ_INSERT_HTML_PLUGIN_FILE ),array(),$current_version);
+	$notice_path = dirname( XYZ_INSERT_HTML_PLUGIN_FILE ) . '/js/notice.js';
+	$style_path = dirname( XYZ_INSERT_HTML_PLUGIN_FILE ) . '/css/xyz_ihs_styles.css';
+	$notice_ver = $current_version . '.' . ( file_exists( $notice_path ) ? filemtime( $notice_path ) : '0' );
+	$style_ver = $current_version . '.' . ( file_exists( $style_path ) ? filemtime( $style_path ) : '0' );
+	wp_register_script( 'xyz_ihs_notice_script', plugins_url('js/notice.js', XYZ_INSERT_HTML_PLUGIN_FILE ), array('jquery'), $notice_ver );
 	wp_enqueue_script( 'xyz_ihs_notice_script' );
 	
-	
-	// Register stylesheets
-	wp_register_style('xyz_ihs_style',plugins_url('css/xyz_ihs_styles.css', XYZ_INSERT_HTML_PLUGIN_FILE ),array(),$current_version);
+	wp_register_style('xyz_ihs_font_awesome', plugins_url('css/font-awesome.min.css', XYZ_INSERT_HTML_PLUGIN_FILE), array(), '4.7.0');
+	wp_enqueue_style('xyz_ihs_font_awesome');
+	wp_register_style('xyz_ihs_style', plugins_url('css/xyz_ihs_styles.css', XYZ_INSERT_HTML_PLUGIN_FILE), array('xyz_ihs_font_awesome'), $style_ver);
 	wp_enqueue_style('xyz_ihs_style');
 }
 add_action('admin_enqueue_scripts', 'xyz_ihs_add_style_script');

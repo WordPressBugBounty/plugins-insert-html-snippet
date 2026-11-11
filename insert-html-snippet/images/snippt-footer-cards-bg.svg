@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="240" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice">
+	<defs>
+		<linearGradient id="smapCardWash" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0%" stop-color="#f3f7ff"/>
+			<stop offset="55%" stop-color="#e8f1ff"/>
+			<stop offset="100%" stop-color="#dce8ff"/>
+		</linearGradient>
+		<radialGradient id="smapCardGlow" cx="92%" cy="8%" r="48%">
+			<stop offset="0%" stop-color="#025cfc" stop-opacity="0.16"/>
+			<stop offset="100%" stop-color="#025cfc" stop-opacity="0"/>
+		</radialGradient>
+		<pattern id="smapCardGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+			<path d="M36 0H0V36" fill="none" stroke="#025cfc" stroke-width="0.6" opacity="0.08"/>
+		</pattern>
+	</defs>
+	<rect width="800" height="240" fill="url(#smapCardWash)"/>
+	<rect width="800" height="240" fill="url(#smapCardGrid)"/>
+	<rect width="800" height="240" fill="url(#smapCardGlow)"/>
+	<g fill="#1d3d64" opacity="0.06">
+		<polygon points="800,0 560,0 800,140"/>
+		<polygon points="0,240 220,240 0,90"/>
+	</g>
+	<g fill="none" stroke="#025cfc" stroke-width="1.1" opacity="0.22">
+		<circle cx="668" cy="52" r="38"/>
+		<circle cx="742" cy="118" r="54"/>
+		<circle cx="598" cy="148" r="26"/>
+	</g>
+	<g fill="#025cfc" opacity="0.28">
+		<circle cx="668" cy="52" r="3.5"/>
+		<circle cx="742" cy="118" r="4"/>
+		<circle cx="598" cy="148" r="3"/>
+		<circle cx="704" cy="176" r="2.5"/>
+	</g>
+	<g stroke="#025cfc" stroke-width="1" opacity="0.2">
+		<line x1="668" y1="52" x2="742" y2="118"/>
+		<line x1="742" y1="118" x2="598" y2="148"/>
+		<line x1="668" y1="52" x2="598" y2="148"/>
+	</g>
+</svg>

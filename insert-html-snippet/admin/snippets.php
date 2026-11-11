@@ -3,20 +3,6 @@ if ( ! defined( 'ABSPATH' ) )
     exit;
     
     global $wpdb;
-	if ((get_option('xyz_ihs_sync_needed') != 0) && (get_option('xyz_ihs_show_snippet_usage')==1)) 
-	{
-		echo '<div id="ics-sync-notice" class="notice notice-warning is-dismissible">
-				<p>
-					<strong>Usage Tracking Sync Required.</strong><br>
-					Your site needs a one-time synchronization to build snippet usage records.
-					This helps in displaying accurate usage statistics.
-					<button id="xyz-start-sync" class="button button-primary"  data-offset ="'. get_option('xyz_ihs_sync_needed').'">
-						'.(get_option('xyz_ihs_sync_needed') > 1 ? 'Resume Sync' : 'Start Sync').'
-					</button>
-					<span id="sync-progress" style="margin-left:10px;"></span>
-				</p>
-			  </div>';
-	  }
     $_GET = stripslashes_deep($_GET);
     $xyz_ihs_message = $search_name_db=$search_name='';
    
@@ -180,14 +166,9 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 <?php
 }
 ?>
-<div >
+<div class="xyz_ihs_manage">
 
 
-	<form method="post">
-		<?php wp_nonce_field( 'bulk_actions_ihs');?>
- 		<fieldset
-			style="width: 98.8%; border: 1px solid #4d3e3e2e; padding: 10px 0px;">
-			<legend><h3>HTML Snippets</h3></legend>
 			<?php 
 			global $wpdb;
 			$pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
@@ -218,35 +199,56 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 
 			$entries = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix."xyz_ihs_short_code  	WHERE title like '%".$search_name_db."%'".$strInsertionMethod." ORDER BY  $field $order LIMIT $offset,$limit" );
 
+$xyz_ihs_add_url = admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-add');
+$xyz_ihs_sync_needed = get_option('xyz_ihs_sync_needed');
+$xyz_ihs_show_usage = get_option('xyz_ihs_show_snippet_usage');
 			?>
+<div class="xyz_ihs_manage_header">
+	<div class="xyz_ihs_manage_heading">
+		<h2>HTML Snippets</h2>
+		<p>Create, place, and manage the HTML snippets on your site.</p>
+	</div>
+	<button type="button" class="xyz_ihs_btn xyz_ihs_btn_primary" onclick='document.location.href="<?php echo esc_url($xyz_ihs_add_url);?>"'>
+		<svg class="xyz_ihs_btn_icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 1.25v11.5M1.25 7h11.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+		Add New HTML Snippet
+	</button>
+</div>
 			
+<?php if (( $xyz_ihs_sync_needed != 0 ) && ( $xyz_ihs_show_usage == 1 )) { ?>
+<div id="ics-sync-notice" class="xyz_ihs_sync">
+	<div class="xyz_ihs_sync_copy">
+		<strong>Usage Tracking Sync Required</strong>
+		<p>Your site needs a one-time synchronization to build snippet usage records. This helps in displaying accurate usage statistics.</p>
+	</div>
+	<div class="xyz_ihs_sync_actions">
+		<button type="button" id="xyz-start-sync" class="xyz_ihs_btn xyz_ihs_btn_primary" data-offset="<?php echo esc_attr($xyz_ihs_sync_needed); ?>">
+			<?php echo ( $xyz_ihs_sync_needed > 1 ) ? 'Resume Sync' : 'Start Sync'; ?>
+		</button>
+		<span id="sync-progress"></span>
+	</div>
+</div>
+<?php } ?>
 			
-
-			<input  id="xyz_ihs_submit"	style="cursor: pointer; margin-bottom:10px; margin-left:8px;" type="button"	name="textFieldButton2" value="Add New HTML Snippet" onClick='document.location.href="<?php echo admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-add');?>"'>
-			<br>
-			
-						
-			
-									
-						
-<span style="padding-left: 6px;color:#21759B;">With Selected : </span>
- <select name="ihs_bulk_actions_snippet" id="ihs_bulk_actions_snippet" style="width:130px;height:29px;">
+<div class="xyz_ihs_toolbar">
+	<form method="post" id="xyz_ihs_bulk_form" class="xyz_ihs_bulk_form">
+		<?php wp_nonce_field( 'bulk_actions_ihs');?>
+	</form>
+	<div class="xyz_ihs_bulk">
+		<label for="ihs_bulk_actions_snippet">With selected</label>
+		<select name="ihs_bulk_actions_snippet" id="ihs_bulk_actions_snippet" form="xyz_ihs_bulk_form">
 	<option value="-1">Bulk Actions</option>
 	<option value="0">Deactivate</option>
 	<option value="1">Activate</option>
 	<option value="2">Delete</option>
 </select>
-<input type="submit" title="Apply" name="apply_ihs_bulk_actions" value="Apply" style="color:#21759B;cursor:pointer;padding: 5px;background:linear-gradient(to top, #ECECEC, #F9F9F9) repeat scroll 0 0 #F1F1F1;border: 2px solid #DFDFDF;">
+		<button type="submit" name="apply_ihs_bulk_actions" value="Apply" form="xyz_ihs_bulk_form" class="xyz_ihs_btn xyz_ihs_btn_secondary">Apply</button>
+	</div>
 		
-</form>		
-<form name="manage_snippets" action="" method="post">
+	<form name="manage_snippets" class="xyz_ihs_filter_form" action="" method="post">
 							 <?php wp_nonce_field('snipp-manage_');?>
-							<div class="xyz_ihs_search_div"  style="float:right;margin:5px;">
-				            	<table class="xyz_ihs_search_div_table" style="width:100%;">
-				                	<tr>
+		<div class="xyz_ihs_field">
 				            
-				                  	<div><span>Snippet Placement</span>&nbsp;</div>
-   <div>
+			<label for="insertionMethod">Snippet Placement</label>
    <select name="insertionMethod" id="insertionMethod" >
   <option value="0" <?php if($insertionMethod==0) { echo "selected"; } ?>>All</option>
 	  <option value="1" <?php if($insertionMethod==1) { echo "selected"; } ?>>Automatic</option>
@@ -254,32 +256,32 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 	
 		</select>
 	</div>
-				                  		 	
-		<div> <input type="text" name="snippet_name" value= "<?php if(isset($search_name)){echo esc_attr($search_name);}?>"  placeholder="Search" ></div>
-	<div><input style="padding:5px;margin-left: 5px;margin-right: 5px;" type="submit" name="search" value="Go" /></div>
+		<div class="xyz_ihs_field xyz_ihs_field_search">
+			<label for="xyz_ihs_snippet_name">Search</label>
+			<input type="text" id="xyz_ihs_snippet_name" name="snippet_name" value="<?php if(isset($search_name)){ echo esc_attr($search_name);}?>" placeholder="Search by tracking name">
 				                 	
-				              		</tr>
-				           		</table>
 	          				</div>	
+		<button type="submit" name="search" value="Go" class="xyz_ihs_btn xyz_ihs_btn_secondary">Go</button>
 </form>		
+</div>
 		
-		
-			<table class="widefat" style="width: 99%; margin: 0 auto; border-bottom:none;">
+<div class="xyz_ihs_table_scroll">
+<table class="xyz_ihs_table">
 				<thead>
 					<tr>
-					<th scope="col" width="3%"><input type="checkbox" id="chkAllSnippets" /></th>
-						<th scope="col" >Tracking Name</th>
-			<th scope="col">Snippet Placement</th>
-			<th scope="col">Placement Details</th>
+			<th scope="col" class="xyz_ihs_col_check"><input type="checkbox" id="chkAllSnippets" form="xyz_ihs_bulk_form" /></th>
+			<th scope="col" class="xyz_ihs_col_name">Tracking Name</th>
+			<th scope="col" class="xyz_ihs_col_placement">Snippet Placement</th>
+			<th scope="col" class="xyz_ihs_col_details">Placement Details</th>
 
-						<th scope="col" >Status</th>
-						<th scope="col" colspan="3" style="text-align: center;">Action</th>
+			<th scope="col" class="xyz_ihs_col_status">Status</th>
+			<th scope="col" class="xyz_ihs_col_actions">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php 
 					
-					if(!empty($entries))//if( count($entries)>0 )
+		if( !empty($entries) )
         				  {
 						$count=1;
 						$class = '';
@@ -288,43 +290,41 @@ Please select at least one snippet to perform this action.&nbsp;&nbsp;&nbsp;
 							$snippetId=intval($entry->id);
 							?>
 					<tr <?php echo $class; ?>>
-					<td style="vertical-align: middle !important;padding-left: 18px;">
-					<input type="checkbox" class="chk" value="<?php echo $snippetId; ?>" name="xyz_ihs_snippet_ids[]" id="xyz_ihs_snippet_ids" />
+		<td class="xyz_ihs_col_check">
+		<input type="checkbox" class="chk" value="<?php echo $snippetId; ?>" name="xyz_ihs_snippet_ids[]" id="xyz_ihs_snippet_ids_<?php echo $snippetId; ?>" form="xyz_ihs_bulk_form" />
 					</td>
-						<td id="xyz_ihs_vAlign" title="<?php echo esc_attr($entry->description); ?>" ><?php 
-						echo esc_html($entry->title); ?></td>
-<td id="xyz_ihs_vAlign">
+			<td class="xyz_ihs_name" title="<?php echo esc_attr( is_string( $entry->description ) ? $entry->description : '' ); ?>"><?php
+			echo esc_html($entry->title);
+			?></td>
+			<td class="xyz_ihs_col_placement">
     <?php 
 $placement_text = '';
     if ($entry->status == 2) {
-
-    $placement_text = 'NA';
+				$placement_text ='<span class="xyz_ihs_muted">NA</span>';
     } else { 
-    /* AUTOMATIC PLACEMENT */
     if ($entry->insertionMethod == 1) {
 
         $placement_text =
-            '<span class="ihs-badge ihs-badge-auto">Automatic</span>';
+		'<span class="xyz_ihs_placement_inline"><span class="ihs-badge ihs-badge-auto">Automatic</span></span>';
     }
-    /* SHORTCODE PLACEMENT */
     elseif ($entry->insertionMethod == 2) {
 
 
         $placement_text =
+		'<span class="xyz_ihs_placement_inline">' .
             '<span class="ihs-badge ihs-badge-shortcode">Shortcode</span> ' .
             '<span onclick="xyz_ihs_copy_shortcode(' . (int) $entry->id . ')" ' .
             'class="xyz_ihs_copy_shortcode" id="xyz_ihs_shortcode_' . (int) $entry->id . '">' .
             '[xyz-ihs snippet="' . esc_html($entry->title) . '"]</span>' .
-            '<span onclick="xyz_ihs_copy_shortcode(' . (int) $entry->id . ')">' .
+		'<span class="xyz_ihs_inline_icon" onclick="xyz_ihs_copy_shortcode(' . (int) $entry->id . ')" title="Click to copy">' .
             '<img class="xyz_ihs_img xyz_ihs_img_table" title="Click to copy" ' .
             'src="' . esc_url(plugins_url('insert-html-snippet/images/copy-document.png')) . '">' .
-            '</span>';
-    }
+		'</span></span>';
 }
 echo $placement_text;
-?>
+}?>
 </td>
-		<td id="xyz_ihs_vAlign" style="color:#1c331cbf;">
+		<td class="xyz_ihs_details xyz_ihs_col_details">
 		<?php
 		if ($entry->status == 2) {
 			echo '—';
@@ -337,6 +337,7 @@ echo $placement_text;
 				echo '—';
     }
 		} elseif ($entry->insertionMethod == 2) {
+
 			$post_count=0;
 			$post_count = $wpdb->get_var($wpdb->prepare(
 				"SELECT COUNT(*) FROM {$wpdb->prefix}xyz_ihs_usage WHERE snippet_id = %d", 
@@ -349,72 +350,73 @@ echo $placement_text;
 			  echo '<span title="Usage details are hidden. Enable &quot;Show Snippet Usage Details&quot; in settings." style="cursor: help;">Hidden</span>';      else
 				echo 'Not used';
 			}
-    }
+		}
     ?>
 </td>
-						<td id="xyz_ihs_vAlign">
+			<td class="xyz_ihs_col_status">
 							<?php 
 								if($entry->status == 2){
-									echo "Inactive";	
+						echo '<span class="xyz_ihs_status xyz_ihs_status_inactive">Inactive</span>';
 								}elseif ($entry->status == 1){
-								echo "Active";	
+						echo '<span class="xyz_ihs_status xyz_ihs_status_active">Active</span>';
 								}
 							
 							?>
 						</td>
+			<td class="xyz_ihs_col_actions">
+			<div class="xyz_ihs_actions">
 						<?php 
 								if($entry->status == 2){
 								$stat1 = admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-status&snippetId='.$snippetId.'&status=1&pageno='.$pagenum);
 						?>
-						<td style="text-align: center;"><a
-							href='<?php echo wp_nonce_url($stat1,'ihs-stat_'.$snippetId); ?>'><img
-								id="xyz_ihs_img" title="Activate"
-								src="<?php echo plugins_url('images/activate.png', XYZ_INSERT_HTML_PLUGIN_FILE )?>">
+			<a class="xyz_ihs_action xyz_ihs_action_activate" href='<?php echo wp_nonce_url($stat1,'ihs-stat_'.$snippetId); ?>' title="Activate" aria-label="Activate">
+				<i class="fa fa-play" aria-hidden="true"></i>
 						</a>
-						</td>
 							<?php 
 								}elseif ($entry->status == 1){
 									$stat2 = admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-status&snippetId='.$snippetId.'&status=2&pageno='.$pagenum);
 								?>
-						<td style="text-align: center;"><a
-							href='<?php echo wp_nonce_url($stat2,'ihs-stat_'.$snippetId); ?>'><img
-								id="xyz_ihs_img" title="Deactivate"
-								src="<?php echo plugins_url('images/pause.png',XYZ_INSERT_HTML_PLUGIN_FILE)?>">
+			<a class="xyz_ihs_action xyz_ihs_action_deactivate" href='<?php echo wp_nonce_url($stat2,'ihs-stat_'.$snippetId); ?>' title="Deactivate" aria-label="Deactivate">
+				<i class="fa fa-pause" aria-hidden="true"></i>
 						</a>
-						</td>		
 								<?php 	
 								}
 								
 							?>
 						
-						<td style="text-align: center;"><a
-							href='<?php echo admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-edit&snippetId='.$snippetId.'&pageno='.$pagenum); ?>'><img
-								id="xyz_ihs_img" title="Edit Snippet"
-								src="<?php echo plugins_url('images/edit.png',XYZ_INSERT_HTML_PLUGIN_FILE)?>">
+			<a class="xyz_ihs_action xyz_ihs_action_edit" href='<?php echo admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-edit&snippetId='.$snippetId.'&pageno='.$pagenum); ?>' title="Edit Snippet" aria-label="Edit Snippet">
+				<i class="fa fa-pencil" aria-hidden="true"></i>
 						</a>
-						</td>
 
 						<?php $delurl = admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-delete&snippetId='.$snippetId.'&pageno='.$pagenum);?>
-						<td style="text-align: center;" ><a
-							href='<?php echo wp_nonce_url($delurl,'ihs-del_'.$snippetId); ?>'
-							onclick="javascript: return confirm('Please click \'OK\' to confirm ');"><img
-								id="xyz_ihs_img" title="Delete Snippet"
-								src="<?php echo plugins_url('images/delete.png',XYZ_INSERT_HTML_PLUGIN_FILE)?>">
-						</a></td>
+			<a class="xyz_ihs_action xyz_ihs_action_danger" href='<?php echo wp_nonce_url($delurl,'ihs-del_'.$snippetId); ?>' title="Delete Snippet" aria-label="Delete Snippet" onclick="javascript: return confirm('Please click \'OK\' to confirm ');">
+				<i class="fa fa-trash" aria-hidden="true"></i>
+			</a>
+			</div>
+			</td>
 					</tr>
 					<?php
 					$count++;
 						}
 					} else { ?>
-					<tr>
-						<td colspan="6" >HTML Snippets not found</td>
+		<tr class="xyz_ihs_empty_row">
+			<td colspan="6">
+				<div class="xyz_ihs_empty">
+					<strong>HTML Snippets not found</strong>
+					<span>Add a snippet to start placing HTML on your site.</span>
+				</div>
+			</td>
 					</tr>
 					<?php } ?>
 				</tbody>
 			</table>
+</div>
 			
-			<input  id="xyz_ihs_submit"	style="cursor: pointer; margin-top:10px;margin-left:8px;" type="button"	name="textFieldButton2" value="Add New HTML Snippet" onClick='document.location.href="<?php echo admin_url('admin.php?page=insert-html-snippet-manage&action=snippet-add');?>"'>
-			
+<div class="xyz_ihs_list_footer">
+	<button type="button" class="xyz_ihs_btn xyz_ihs_btn_primary" onclick='document.location.href="<?php echo esc_url($xyz_ihs_add_url);?>"'>
+		<svg class="xyz_ihs_btn_icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 1.25v11.5M1.25 7h11.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+		Add New HTML Snippet
+	</button>
 			<?php
 			$total = $wpdb->get_var( "SELECT COUNT(`id`) FROM ".$wpdb->prefix."xyz_ihs_short_code" );
 			$num_of_pages = ceil( $total / $limit );
@@ -429,11 +431,11 @@ echo $placement_text;
 			) );
 
 			if ( $page_links ) {
-				echo '<div class="tablenav" style="width:99%"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
+		echo '<div class="xyz_ihs_pagination">' . $page_links . '</div>';
 			}
 
 			?>
-		</fieldset>
+</div>
 	
 </div>
 <script type="text/javascript">

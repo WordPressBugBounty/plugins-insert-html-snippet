@@ -1,6 +1,6 @@
 <?php
-	if ( ! defined( 'ABSPATH' ) )
-		 exit;
+if ( ! defined( 'ABSPATH' ) )
+	 exit;
 ?>
 <style>
 	a.xyz_header_link:hover{text-decoration:underline;}
@@ -71,11 +71,29 @@ if($_POST && isset($_POST['xyz_ihs_credit']))
 	update_option('xyz_credit_link', $xyz_ihs_credit_link);
 }
 
+?>
+
+<style>
+#text {margin:50px auto; width:500px}
+.hotspot {color:#900; padding-bottom:1px; border-bottom:1px dotted #900; cursor:pointer}
+
+#tt {position:absolute; display:block; }
+#tttop {display:block; height:5px; margin-left:5px;}
+#ttcont {display:block; padding:2px 10px 3px 7px;  margin-left:-400px; background:#666; color:#FFF}
+#ttbot {display:block; height:5px; margin-left:5px; }
+</style>
+
+<div class="xyz_ihs_admin_shell">
+<div class="xyz_ihs_topbar">
+<?php
 if((get_option('xyz_credit_link')=="0")&&(get_option('xyz_ihs_credit_dismiss')=="0")){
 	?>
-<div style="float:left;background-color: #FFECB3;border-radius:5px;padding: 0px 5px;margin-top: 10px;border: 1px solid #E0AB1B" id="xyz_ihs_backlink_div">
-
-	Please do a favour by enabling backlink to our site. <a id="xyz_ihs_backlink" style="cursor: pointer;" >Okay, Enable</a>. <a id="xyz_ihs_dismiss" style="cursor: pointer;" >Dismiss</a>.
+<div class="xyz_ihs_backlink" id="xyz_ihs_backlink_div">
+	<span class="xyz_ihs_backlink_text">Please do a favour by enabling backlink to our site.</span>
+	<span class="xyz_ihs_backlink_actions">
+		<a id="xyz_ihs_backlink">Okay, Enable</a>
+		<a id="xyz_ihs_dismiss">Dismiss</a>
+	</span>
 <script type="text/javascript">
 
 	jQuery(document).ready(function() {
@@ -100,8 +118,9 @@ if((get_option('xyz_credit_link')=="0")&&(get_option('xyz_ihs_credit_dismiss')==
 
 					if(response==1){
 						jQuery("#xyz_ihs_backlink_div").html('Thank you for enabling backlink!');
-					 	jQuery("#xyz_ihs_backlink_div").css('background-color', '#D8E8DA');
-						jQuery("#xyz_ihs_backlink_div").css('border', '1px solid #0F801C');
+					 	jQuery("#xyz_ihs_backlink_div").css('background-color', '#ecfdf3');
+						jQuery("#xyz_ihs_backlink_div").css('border', '1px solid #abefc6');
+						jQuery("#xyz_ihs_backlink_div").css('color', '#067647');
 						jQuery("select[id=xyz_ihs_credit] option[value=ihs]").attr("selected", true);
 					}
 
@@ -120,41 +139,51 @@ if((get_option('xyz_credit_link')=="0")&&(get_option('xyz_ihs_credit_dismiss')==
 }
 ?>
 
-<style>
-#text {margin:50px auto; width:500px}
-.hotspot {color:#900; padding-bottom:1px; border-bottom:1px dotted #900; cursor:pointer}
-
-#tt {position:absolute; display:block; }
-#tttop {display:block; height:5px; margin-left:5px;}
-#ttcont {display:block; padding:2px 10px 3px 7px;  margin-left:-400px; background:#666; color:#FFF}
-#ttbot {display:block; height:5px; margin-left:5px; }
-</style>
-
-
-
-
-
-<div style="margin-top: 10px">
-<table style="float:right; ">
-<tr>
-<td  style="float:right;" >
-	<a  class="xyz_header_link" style="margin-left:8px;margin-right:12px;"   target="_blank" href="https://xyzscripts.com/donate/5">Donate</a>
-</td>
-<td style="float:right;">
-	<a class="xyz_header_link" style="margin-left:8px;" target="_blank" href="http://help.xyzscripts.com/docs/insert-html-snippet/faq/">FAQ</a>
-</td>
-<td style="float:right;">
-	<a class="xyz_header_link" style="margin-left:8px;" target="_blank" href="http://help.xyzscripts.com/docs/insert-html-snippet/user-guide/introduction/">Readme</a>
-</td>
-<td style="float:right;">
-	<a class="xyz_header_link" style="margin-left:8px;" target="_blank" href="http://xyzscripts.com/wordpress-plugins/insert-html-snippet/details">About</a>
-</td>
-<td style="float:right;">
-	<a class="xyz_header_link" target="_blank" href="http://xyzscripts.com">XYZScripts</a>
-</td>
-
-</tr>
-</table>
+	<div class="xyz_ihs_quick_links" id="xyz_ihs_QuickLinks">
+		<div class="xyz_ihs_menu_links" aria-hidden="true">
+			<div class="xyz_ihs_quick_links_panel">
+				<div class="xyz_ihs_quick_links_heading">Quick Links</div>
+				<ul class="xyz_ihs_quick_links_list">
+					<li>
+						<a class="xyz_header_link" target="_blank" rel="noopener noreferrer" href="http://help.xyzscripts.com/docs/insert-html-snippet/user-guide/introduction/">
+							<span class="xyz_ihs_quick_link_icon" aria-hidden="true"><i class="fa fa-book"></i></span>
+							<span class="xyz_ihs_quick_link_label">Readme</span>
+						</a>
+					</li>
+					<li>
+						<a class="xyz_header_link" target="_blank" rel="noopener noreferrer" href="http://xyzscripts.com/wordpress-plugins/insert-html-snippet/details">
+							<span class="xyz_ihs_quick_link_icon" aria-hidden="true"><i class="fa fa-info-circle"></i></span>
+							<span class="xyz_ihs_quick_link_label">About</span>
+						</a>
+					</li>
+					<li>
+						<a class="xyz_header_link" target="_blank" rel="noopener noreferrer" href="http://help.xyzscripts.com/docs/insert-html-snippet/faq/">
+							<span class="xyz_ihs_quick_link_icon" aria-hidden="true"><i class="fa fa-question-circle"></i></span>
+							<span class="xyz_ihs_quick_link_label">FAQ</span>
+						</a>
+					</li>
+					<li>
+						<a class="xyz_header_link" target="_blank" rel="noopener noreferrer" href="https://xyzscripts.com/donate/5">
+							<span class="xyz_ihs_quick_link_icon" aria-hidden="true"><i class="fa fa-heart"></i></span>
+							<span class="xyz_ihs_quick_link_label">Donate</span>
+						</a>
+					</li>
+					<li>
+						<a class="xyz_header_link" target="_blank" rel="noopener noreferrer" href="http://xyzscripts.com">
+							<span class="xyz_ihs_quick_link_icon" aria-hidden="true"><i class="fa fa-building"></i></span>
+							<span class="xyz_ihs_quick_link_label">XYZScripts</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<button type="button" class="xyz_ihs_up_button" aria-label="Toggle quick links" aria-expanded="false">
+			<span class="xyz_ihs_quick_links_btn_icon" aria-hidden="true">
+				<i class="fa fa-th"></i>
+			</span>
+			<span class="xyz_ihs_quick_links_btn_label">Quick Links</span>
+			<i class="fa fa-angle-down xyz_ihs_quick_links_btn_caret" aria-hidden="true"></i>
+		</button>
+	</div>
 </div>
-
-<div style="clear: both"></div>
+<div class="xyz_ihs_content_wrapper">

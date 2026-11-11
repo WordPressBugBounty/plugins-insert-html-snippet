@@ -74,98 +74,99 @@ Thanks again for using the plugin. We will never show the message again.
 		}
 	}
 ?>
-<div>
-	<form method="post">
+<div class="xyz_ihs_manage xyz_ihs_settings">
+	<div class="xyz_ihs_manage_header">
+		<div class="xyz_ihs_manage_heading">
+			<h2>Settings</h2>
+			<p>Control how snippets are listed, executed, and reported.</p>
+		</div>
+	</div>
+	<form method="post" class="xyz_ihs_settings_form">
 		<?php wp_nonce_field('ihs-setting_');?>
-		<div style="float: left;width: 98%">
-			<fieldset style=" width:100%; border:1px solid #F7F7F7; padding:10px 0px 15px 10px;">
-				<legend ><h3>
-					Settings
-					</h3></legend>
-				<table class="widefat"  style="width:99%;">
-					<tr valign="top">
-						<td scope="row" >
-							<label for="xyz_ihs_sort">Sorting of snippets</label>
-						</td>
-						<td>
+		<div class="xyz_ihs_settings_card">
+			<h3 class="xyz_ihs_settings_section_title">Sorting &amp; Display</h3>
+			<div class="xyz_ihs_setting_row">
+				<div class="xyz_ihs_setting_copy">
+					<label for="xyz_ihs_sort_by_field">Sorting of snippets</label>
+					<p>Choose the order used on the snippet list.</p>
+				</div>
+				<div class="xyz_ihs_setting_control xyz_ihs_sort_controls">
 							<select id="xyz_ihs_sort_by_field" name="xyz_ihs_sort_by_field">
 								<option value="id" <?php if(isset($_POST['xyz_ihs_sort_by_field']) && $_POST['xyz_ihs_sort_by_field']=='id'){echo 'selected';} else if(get_option('xyz_ihs_sort_field_name')=="id"){echo 'selected';} ?>>Based on create time</option>
 								<option value="title" <?php if(isset($_POST['xyz_ihs_sort_by_field']) && $_POST['xyz_ihs_sort_by_field']=='title'){ echo 'selected';}elseif(get_option('xyz_ihs_sort_field_name')=="title"){echo 'selected';} ?>>Based on name</option>
 							</select>
-							&nbsp;
-							<select id="xyz_ihs_sort_by_order" name="xyz_ihs_sort_by_order"  >
+					<select id="xyz_ihs_sort_by_order" name="xyz_ihs_sort_by_order" aria-label="Sort direction">
 								<option value="asc" <?php if(isset($_POST['xyz_ihs_sort_by_order']) && $_POST['xyz_ihs_sort_by_order']=='asc'){ echo 'selected';}elseif(get_option('xyz_ihs_sort_order')=="asc"){echo 'selected';} ?>>Ascending</option>
 								<option value="desc" <?php if(isset($_POST['xyz_ihs_sort_by_order']) && $_POST['xyz_ihs_sort_by_order']=='desc'){echo 'selected';} elseif(get_option('xyz_ihs_sort_order')=="desc"){echo 'selected';} ?>>Descending</option>
 							</select>
-						</td>
-					</tr>
-					<tr valign="top">
-						<td scope="row" >
-							<label for="xyz_ihs_credit">Credit link to author</label>
-						</td>
-						<td>
-							<select name="xyz_ihs_credit" id="xyz_ihs_credit">
-								<option value="ihs"
-								<?php selected(get_option('xyz_credit_link'),"ihs"); ?>>Enable</option>
-								<option value="0"
-								<?php if(get_option('xyz_credit_link')!="ihs"){echo 'selected';} ?>>Disable</option>
-							</select>
-						</td>
-					</tr>
-					<tr valign="top">
-						<td scope="row" class=" xyz_ihs_settingInput" id="">
+				</div>
+			</div>
+			<div class="xyz_ihs_setting_row">
+				<div class="xyz_ihs_setting_copy">
 							<label for="xyz_ihs_limit">Pagination limit</label>
-						</td>
-						<td id="">
-							<input  name="xyz_ihs_limit" type="text"
-							id="xyz_ihs_limit" value="
-<?php if(isset($_POST['xyz_ihs_limit']) ){echo abs(intval($_POST['xyz_ihs_limit']));}else{print(get_option('xyz_ihs_limit'));} ?>" />
-						</td>
-					</tr>
-					<tr valign="top">
-						<td scope="row">
-							<label for="xyz_ihs_pre_ads">Premium Version Ads</label>
-						</td>
-						<td>
-							<select name="xyz_ihs_pre_ads" id="xyz_ihs_pre_ads">
-								<option value="0">Disable</option>
-								<option value="1" <?php selected(get_option('xyz_ihs_premium_version_ads'),1);?>>Enable</option>
+					<p>Number of snippets shown on each page of the list.</p>
+				</div>
+				<div class="xyz_ihs_setting_control">
+					<input name="xyz_ihs_limit" type="text" id="xyz_ihs_limit" inputmode="numeric" value="<?php if(isset($_POST['xyz_ihs_limit']) ){echo abs(intval($_POST['xyz_ihs_limit']));}else{echo esc_attr(get_option('xyz_ihs_limit'));} ?>" />
+				</div>
+			</div>
+			<div class="xyz_ihs_setting_row">
+				<div class="xyz_ihs_setting_copy">
+					<label for="xyz_ihs_show_snippet_usage">Show Snippet Usage Details</label>
+					<p>Display where each snippet is used (posts/pages) within the admin panel. Usage data is maintained automatically after the initial sync.</p>
+				</div>
+				<div class="xyz_ihs_setting_control">
+					<select name="xyz_ihs_show_snippet_usage" id="xyz_ihs_show_snippet_usage">
+						<option value="0" <?php selected(get_option('xyz_ihs_show_snippet_usage'),0);?>>Disable</option>
+						<option value="1" <?php selected(get_option('xyz_ihs_show_snippet_usage'),1);?>>Enable</option>
 							</select>
-						</td>
-					</tr>
-					<tr valign="top">
-						<td scope="row">
-							<label for="xyz_ihs_exec_in_editor">Execute shortcodes in editors</label><br/><span style="color: #1A87B9;font-size:13px;" >[Enable/Disable Shortcode Execution in Editors (Gutenberg, Classic, Elementor, etc.)]</span>
-						</td>
-						<td>
+				</div>
+			</div>
+		</div>
+		<div class="xyz_ihs_settings_card">
+			<h3 class="xyz_ihs_settings_section_title">Editor</h3>
+			<div class="xyz_ihs_setting_row">
+				<div class="xyz_ihs_setting_copy">
+					<label for="xyz_ihs_exec_in_editor">Execute shortcodes in editors</label>
+					<p>Enable or disable shortcode execution in editors (Gutenberg, Classic, Elementor, etc.).</p>
+				</div>
+				<div class="xyz_ihs_setting_control">
 						<select name="xyz_ihs_exec_in_editor" id="xyz_ihs_exec_in_editor">
                                 <option value="0" <?php selected(get_option('xyz_ihs_exec_in_editor'),0);?>>Disable</option>
                                 <option value="1" <?php selected(get_option('xyz_ihs_exec_in_editor'),1);?>>Enable</option>
                             </select>
-						</td>
-					</tr>
-					<tr valign="top">
-			                        <td scope="row">
-			                            <label for="xyz_ihs_show_snippet_usage">Show Snippet Usage Details </label>
-										<img src="<?php echo plugins_url('insert-html-snippet/images/support.png')?>"  onmouseover="document.getElementById('xyz_ihs_usage_note').style.display = '';" onmouseout="document.getElementById('xyz_ihs_usage_note').style.display = 'none';">
-							<div id="xyz_ihs_usage_note" class="xyz_ihs_informationdiv" style="display: none;">Display where each snippet is used (posts/pages) within the admin panel.<br/>Usage data is maintained automatically after the initial sync.</div>
-			                        </td>
-			                        <td>
-			                            <select name="xyz_ihs_show_snippet_usage" id="xyz_ihs_show_snippet_usage">
-											<option value="0" <?php selected(get_option('xyz_ihs_show_snippet_usage'),0);?>>Disable</option>
-                                			<option value="1" <?php selected(get_option('xyz_ihs_show_snippet_usage'),1);?>>Enable</option>
+				</div>
+			</div>
+		</div>
+		<div class="xyz_ihs_settings_card">
+			<h3 class="xyz_ihs_settings_section_title">General</h3>
+			<div class="xyz_ihs_setting_row">
+				<div class="xyz_ihs_setting_copy">
+					<label for="xyz_ihs_credit">Credit link to author</label>
+					<p>Show a small credit link on the front end of your site.</p>
+				</div>
+				<div class="xyz_ihs_setting_control">
+					<select name="xyz_ihs_credit" id="xyz_ihs_credit">
+						<option value="ihs" <?php selected(get_option('xyz_credit_link'),"ihs"); ?>>Enable</option>
+						<option value="0" <?php if(get_option('xyz_credit_link')!="ihs"){echo 'selected';} ?>>Disable</option>
 			                            </select>
-			                	</td>
-			                </tr>
-					<tr valign="top">
-						<td scope="row" class=" xyz_ihs_settingInput" id="xyz_ihs_bottomBorderNone">
-						</td>
-						<td id="xyz_ihs_bottomBorderNone">
-							<input style="margin:10px 0 20px 0;" id="submit" class="button-primary xyz_ihs_bottonWidth" type="submit" value=" Update Settings " />
-						</td>
-					</tr>
-				</table>
-			</fieldset>
+				</div>
+			</div>
+			<div class="xyz_ihs_setting_row">
+				<div class="xyz_ihs_setting_copy">
+					<label for="xyz_ihs_pre_ads">Premium Version Ads</label>
+					<p>Show upgrade messages inside the plugin screens.</p>
+				</div>
+				<div class="xyz_ihs_setting_control">
+					<select name="xyz_ihs_pre_ads" id="xyz_ihs_pre_ads">
+						<option value="0" <?php selected(get_option('xyz_ihs_premium_version_ads'),0);?>>Disable</option>
+						<option value="1" <?php selected(get_option('xyz_ihs_premium_version_ads'),1);?>>Enable</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="xyz_ihs_settings_actions">
+			<button type="submit" id="submit" class="xyz_ihs_btn xyz_ihs_btn_primary">Update Settings</button>
 		</div>
 	</form>
 </div>
